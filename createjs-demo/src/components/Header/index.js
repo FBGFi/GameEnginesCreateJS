@@ -3,7 +3,6 @@ import React, {Component} from "react";
 import './Header.css';
 
 const Button = (props) => {
-    console.log("Render");
     return(
         <button onClick={() => props.onClick(Math.floor(Math.random() * 100))} className="Button">Kasvata numeroa</button>
     );
