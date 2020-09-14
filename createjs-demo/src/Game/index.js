@@ -1,10 +1,9 @@
 import React, {Component} from "react";
 
-import './Header.css';
 
-
-class Header extends Component{
+class Game extends Component{
     state = {
+        lives: 3
     }
 
     constructor(props){
@@ -13,10 +12,11 @@ class Header extends Component{
 
     render(){
         return(
-            <div className="Header">
+            <div className="Game">
+                <canvas />
             </div>
         );
     }
 }
 
-export default Header;
+export default Game;
