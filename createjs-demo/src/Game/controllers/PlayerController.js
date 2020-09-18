@@ -19,7 +19,17 @@ export class PlayerController{
      * @author Aleksi - move the player on Y-axis
      * @param {Number} y - amount moved
      */
-    move = (y) => this.state.posY -= y;
+    move = (y) => { 
+        if(this.state.posY - y >= Constants.canvasMaxHeight - (Constants.playerHeight * Constants.playerScale)) {
+            this.state.posY = Constants.canvasMaxHeight - (Constants.playerHeight * Constants.playerScale);
+        }
+        else if(this.state.posY - y <= 0){ 
+            this.state.posY = 0;
+        }
+        else {
+            this.state.posY -= y;
+        }
+    }
 
     /**
      * @author Aleksi - increase or decrease currentHP

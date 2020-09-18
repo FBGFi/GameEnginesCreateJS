@@ -47,7 +47,7 @@ export class GameController {
                 projectile = new createjs.Shape();
                 projectile.graphics.beginFill("black").drawCircle(0, 0, 5);
                 projectile.x = this.player.x;
-                projectile.y = this.player.y;
+                projectile.y = this.player.y + (Constants.playerHeight * Constants.playerScale / 2);
                 this.playerProjectiles.push(projectile);
                 this.stage.addChild(projectile);
                 break;
