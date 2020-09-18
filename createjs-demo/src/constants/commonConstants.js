@@ -14,6 +14,7 @@ const playerScale = 5;
 module.exports = {
     // maximum width and height of the game canvas in pixels
     canvasMaxWidth: canvasMaxWidth,
+    // maximum height of the game canvas in pixels
     canvasMaxHeight: canvasMaxHeight,
     // max HP of the player
     maxHP: maxHP,
