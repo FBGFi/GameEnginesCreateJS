@@ -16,7 +16,6 @@ class Game extends Component {
     componentDidMount() {
         window.addEventListener('resize', () => {
             if (window.innerWidth < Constants.canvasMaxWidth || this.state.scaleFactor !== 1) {
-                console.log("asd");
                 this.setState({ ...this.state, ...{ scaleFactor: Constants.scaleFactor() } });
             }
         });
@@ -24,7 +23,7 @@ class Game extends Component {
 
     render() {
         return (
-            <div className="Game" style={{ width: Constants.canvasMaxWidth*this.state.scaleFactor}}>
+            <div className="Game" style={{ maxWidth: Constants.canvasMaxWidth}}>
                 <canvas style={{ width: Constants.canvasMaxWidth, transform: `scale(${this.state.scaleFactor})` }} />
             </div>
         );
