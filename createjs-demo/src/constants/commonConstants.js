@@ -1,4 +1,5 @@
 const canvasMaxWidth = 1280;
+const canvasMaxHeight = canvasMaxWidth * 0.5625;
 const maxHP = 50;
 const initRockets = 3;
 const playerXPos = canvasMaxWidth * 0.05;
@@ -9,6 +10,8 @@ const playerXPos = canvasMaxWidth * 0.05;
 module.exports = {
     // maximum width of the game canvas in pixels
     canvasMaxWidth: canvasMaxWidth,
+    // maximum height of the game canvas in pixels
+    canvasMaxHeight: canvasMaxHeight,
     // max HP of the player
     maxHP: maxHP,
     // amount of rockets at the beginning of the game
