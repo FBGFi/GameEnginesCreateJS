@@ -20,7 +20,7 @@ export class PlayerController{
      * @author Aleksi - move the player on Y-axis
      * @param {Number} y - amount moved
      */
-    move = (y) => this.state.posY += y;
+    move = (y) => this.state.posY -= y;
 
     /**
      * @author Aleksi - increase or decrease currentHP

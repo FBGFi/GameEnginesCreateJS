@@ -15,7 +15,7 @@ class Game extends Component {
     }
 
     componentDidMount() {
-        this.stage = new window.createjs.Stage("game-stage");
+        this.stage = new window.createjs.Stage(this.canvasRef);
         this.gameController = new GameController(this.stage);
         window.addEventListener('resize', () => {
             if (window.innerWidth < Constants.canvasMaxWidth || this.state.scaleFactor !== 1) {
@@ -31,9 +31,8 @@ class Game extends Component {
             <div className="Game" style={{ maxWidth: Constants.canvasMaxWidth}}>
                 <canvas 
                     ref={ref => this.canvasRef = ref} 
-                    id="game-stage" 
                     width={Constants.canvasMaxWidth} 
-                    height={Constants.canvasMaxWidth * 0.5625} 
+                    height={Constants.canvasMaxHeight} 
                      />
             </div>
         );
