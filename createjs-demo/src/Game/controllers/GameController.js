@@ -33,8 +33,49 @@ export class GameController {
         this.stage.addChild(this.player);
         this.stage.update();
 
+        this.playerProjectiles = [];
+
         document.onkeydown = this.handleKeyDown;
         document.onkeyup = this.handleKeyUp;
+        document.onkeypress = this.handleKeyPress;
+    }
+
+    createPlayerProjectile = type => {
+        let projectile;
+        switch (type) {
+            case "MAIN":
+                projectile = new createjs.Shape();
+                projectile.graphics.beginFill("black").drawCircle(0, 0, 5);
+                projectile.x = this.player.x;
+                projectile.y = this.player.y;
+                this.playerProjectiles.push(projectile);
+                this.stage.addChild(projectile);
+                break;
+            case "ROCKET":
+                break;
+            default:
+                break;
+        }
+    }
+
+    handleKeyPress = e => {
+        switch (e.key) {
+            case "Space":
+            case " ":
+                if (this.playerController.shoot("MAIN")) {
+                    // add sound here
+                    this.createPlayerProjectile("MAIN");
+                }
+                break;
+            case "KeyR":
+            case "r":
+                if (this.playerController.shoot("ROCKET")) {
+                    // add sound here
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     handleKeyDown = e => {
@@ -85,8 +126,28 @@ export class GameController {
         }
     }
 
+    handleProjectileMovement = async () => {
+        for (let i = this.playerProjectiles.length - 1; i >= 0; i--) {
+            if (this.playerProjectiles[i] !== undefined) {
+                if (this.playerProjectiles[i].x < Constants.canvasMaxWidth) {
+                    this.playerProjectiles[i].x += Constants.projectileSpeed;
+                } else if (this.playerProjectiles[i].x > Constants.canvasMaxWidth) {
+                    this.stage.removeChild(this.playerProjectiles[i]);
+                    if (this.playerProjectiles.length > 1) {
+                        await this.playerProjectiles.splice(0, i);
+                    } else {
+                        this.playerProjectiles = [];
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
     handleTick = (event) => {
         this.playerMovement();
+        this.handleProjectileMovement();
+
         this.stage.update();
     }
 }

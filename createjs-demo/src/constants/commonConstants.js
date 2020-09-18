@@ -4,6 +4,7 @@ const maxHP = 50;
 const initRockets = 3;
 const playerXPos = canvasMaxWidth * 0.05;
 const playerMovementSpeed = 10;
+const projectileSpeed = 10;
 const FPS = 60;
 const playerHeight = 5;
 const playerScale = 5;
@@ -23,6 +24,8 @@ module.exports = {
     playerXPos: playerXPos,
     // player movement speed
     playerMovementSpeed: playerMovementSpeed,
+    // projectile speed
+    projectileSpeed: projectileSpeed,
     // Frames per second
     FPS: FPS,
     // player height in pixels
