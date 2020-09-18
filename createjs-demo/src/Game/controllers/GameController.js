@@ -4,6 +4,9 @@ import Constants from "../../constants/commonConstants";
 import { PlayerController } from "./PlayerController";
 import playerSprite from "../sprites/playermodel.png";
 
+import { EnemyController } from "./EnemyController";
+import enemySprite from "../sprites/blob_0001.png";
+
 const createjs = window.createjs;
 
 export class GameController {
@@ -20,6 +23,9 @@ export class GameController {
         canvas.getContext('2d').imageSmoothingEnabled = false;
         this.playerController = new PlayerController();
         this.initPlayer();
+
+        this.enemiesList = [];
+        this.spawnEnemies();
 
         createjs.Ticker.setFPS(Constants.FPS);
         createjs.Ticker.addEventListener("tick", this.handleTick);
@@ -144,9 +150,70 @@ export class GameController {
         }
     }
 
+    /**
+     * @author Sami - Create enemies on interval
+     */
+    spawnEnemies = () => {
+        let interval = setInterval(() => {
+            this.createEnemy(1);
+        }, 2000);
+    }
+
+    /**
+     * @author Sami - Create a new enemy on the stage
+     * @param {Number} x 
+     */
+    createEnemy = (x) => {
+        let enemyController;
+        let enemy;
+        for (let i = 0; i < x; i++) {
+            enemyController = new EnemyController();
+            enemy = new createjs.Bitmap(enemySprite);
+            enemy.scale = Constants.playerScale;
+            enemy.x = enemyController.state.pos.x;
+            enemy.y = enemyController.state.pos.y;
+            this.enemiesList.push({
+                enemy: enemy,
+                enemyController: enemyController
+            });
+
+            this.stage.addChild(enemy);
+            this.stage.update();
+        }
+    }
+
+    /**
+     * @author Sami - move existing enemies and remove them after they are out of game area
+     */
+    handleEnemyMovement = () => {
+        let length = this.enemiesList.length;
+        for (let i = 0; i < length; i++) {
+            if (this.enemiesList[i] !== undefined) {
+                if (this.enemiesList[i].enemyController.state.pos.x > Constants.canvasMaxWidth * 0 - Constants.playerHeight * Constants.playerScale) {
+                    this.enemiesList[i].enemyController.move(-5, 0);
+                    this.enemiesList[i].enemy.x = this.enemiesList[i].enemyController.state.pos.x;
+                    this.enemiesList[i].enemy.y = this.enemiesList[i].enemyController.state.pos.y;
+                } else {
+                    this.removeEnemy(i);
+                }
+            }
+        }
+    }
+
+    /**
+     * @author Sami - removes an enemy from the stage and the enemyList
+     * @param {Number} i 
+     */
+    removeEnemy = (i) => {
+        this.stage.removeChild(this.enemiesList[i].enemy);
+        this.enemiesList.splice(i, 1);
+    }
+
     handleTick = (event) => {
         this.playerMovement();
         this.handleProjectileMovement();
+
+        this.handleEnemyMovement();
 
         this.stage.update();
     }

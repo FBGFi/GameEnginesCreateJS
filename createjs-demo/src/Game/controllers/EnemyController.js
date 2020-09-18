@@ -7,29 +7,28 @@ import Constants, { canvasMaxHeight, canvasMaxWidth } from "../../constants/comm
 export class EnemyController {
     state = {
         maxHP: 1,
-        currentHP: this.state.maxHP,
+        currentHP: 0,
         pos: {
-            x: Constants.canvasMaxWidth * 1.05,
-            y:  Constants.canvasMaxHeight * (Math.random() * 0.9 + 0.05)
+            x: Constants.canvasMaxWidth,
+            y:  Constants.canvasMaxHeight * (Math.random(Math.floor(Math.random) * 10) * 0.9 + 0.05)
         }
     }
 
-    constructor() {}
+    constructor() {
+        this.state.currentHP = this.state.maxHP;
+    }
 
     move = (x, y) => {
-        let poxX = this.state.pos.x += x;
-        let posY = this.state.pos.y += y;
+        this.state.pos.x += x;
+        this.state.pos.y += y;
     }
 
     takeDamage = (damage) => {
         let newHP = this.state.currentHP -= damage;
-        if (newHP <= this.state.maxHP) this.destructor;
+        if (newHP <= this.state.maxHP) return this.destructor();
     }
 
     destructor() {
-        let dropObject = Math.random() < 0.1 ? true : false;
-        if (dropObject === true) {
-            
-        }
+        return Math.random() < 0.1 ? true : false;
     }
 }
