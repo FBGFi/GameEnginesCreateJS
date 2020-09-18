@@ -1,4 +1,13 @@
 .Game {
   margin: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.Game canvas {
+  width: 100%;
+  background-color: red;
+  margin: auto;
 }
 /*# sourceMappingURL=Game.css.map */

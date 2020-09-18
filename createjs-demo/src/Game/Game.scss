@@ -1,3 +1,10 @@
 .Game{
     margin: auto;
+    display: flex;
+
+    canvas{
+        width: 100%;
+        background-color: red;
+        margin: auto;
+    }
 }
