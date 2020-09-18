@@ -16,14 +16,12 @@ class Game extends Component {
 
     componentDidMount() {
         this.stage = new window.createjs.Stage(this.canvasRef);
-        this.gameController = new GameController(this.stage);
+        this.gameController = new GameController(this.stage,this.canvasRef);
         window.addEventListener('resize', () => {
             if (window.innerWidth < Constants.canvasMaxWidth || this.state.scaleFactor !== 1) {
                 this.setState({ ...this.state, ...{ scaleFactor: Constants.scaleFactor() } });
             }
         });
-
-
     }
 
     render() {

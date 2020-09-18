@@ -2,6 +2,7 @@
 
 import Constants from "../../constants/commonConstants";
 import { PlayerController } from "./PlayerController";
+import playerSprite from "../sprites/playermodel.png";
 
 const createjs = window.createjs;
 
@@ -14,18 +15,19 @@ export class GameController {
      * @author Aleksi - class containing game logic
      * @param {Stage} stage 
      */
-    constructor(stage) {
+    constructor(stage, canvas) {
         this.stage = stage;
+        canvas.getContext('2d').imageSmoothingEnabled = false;
         this.playerController = new PlayerController();
         this.initPlayer();
+
         createjs.Ticker.setFPS(Constants.FPS);
         createjs.Ticker.addEventListener("tick", this.handleTick);
-
     }
 
     initPlayer = () => {
-        this.player = new createjs.Shape();
-        this.player.graphics.beginFill("red").drawCircle(0, 0, Constants.playerHeight);
+        this.player = new createjs.Bitmap(playerSprite);
+        this.player.scale = Constants.playerScale;
         this.player.x = Constants.playerXPos;
         this.player.y = this.playerController.state.posY;
         this.stage.addChild(this.player);
@@ -66,13 +68,13 @@ export class GameController {
     playerMovement = () => {
         switch (this.state.playerDirection) {
             case "UP":
-                if (this.playerController.state.posY > Constants.playerHeight) {
+                if (this.playerController.state.posY > 0) {
                     this.playerController.move(Constants.playerMovementSpeed);
                     this.player.y = this.playerController.state.posY;
                 }
                 break;
             case "DOWN":
-                if (this.playerController.state.posY < Constants.canvasMaxHeight - Constants.playerHeight) {
+                if (this.playerController.state.posY < Constants.canvasMaxHeight - (Constants.playerHeight * Constants.playerScale)) {
                     this.playerController.move(-Constants.playerMovementSpeed);
                     this.player.y = this.playerController.state.posY;
                 }
