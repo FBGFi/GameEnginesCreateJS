@@ -2,8 +2,7 @@
 import Constants from "../../constants/commonConstants";
 
 /**
- * @author Aleksi - class controlling player actions¨
- * @param {Number} posY - Y-position of the player at the beginning of the game (canvas height / 2)
+ * @author Aleksi - class controlling player actions
  */
 export class PlayerController{
     state = {
@@ -13,8 +12,8 @@ export class PlayerController{
         posY: 0
     }
 
-    constructor(posY){
-        this.state.posY = posY;
+    constructor(){
+        this.state.posY = Constants.canvasMaxWidth * 0.5625 / 2;
     }
 
     /**
@@ -25,7 +24,7 @@ export class PlayerController{
 
     /**
      * @author Aleksi - increase or decrease currentHP
-     * @param {*} hp - amount changed
+     * @param {Number} hp - amount changed
      */
     hpChanged = (hp) => {
         let compHp = this.state.currentHP += hp;
