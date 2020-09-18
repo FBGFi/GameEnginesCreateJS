@@ -6,7 +6,6 @@ import Constants from "../../constants/commonConstants";
  */
 export class PlayerController{
     state = {
-        maxHP: Constants.maxHP,
         currentHP: Constants.maxHP,
         rocketsLeft: Constants.initRockets,
         posY: 0
@@ -20,7 +19,7 @@ export class PlayerController{
      * @author Aleksi - move the player on Y-axis
      * @param {Number} y - amount moved
      */
-    move = (y) => this.state.posY += y;
+    move = (y) => this.state.posY -= y;
 
     /**
      * @author Aleksi - increase or decrease currentHP
@@ -28,6 +27,20 @@ export class PlayerController{
      */
     hpChanged = (hp) => {
         let compHp = this.state.currentHP += hp;
-        this.state.currentHP = compHp > this.state.maxHP ? this.state.maxHP : compHp;
+        this.state.currentHP = compHp > Constants.maxHP ? Constants.maxHP : compHp;
+    }
+
+    /**
+     * @author Aleksi - player is shooting
+     * @param {String} weapon - "MAIN" or "ROCKET"
+     * @returns {Boolean}
+     */
+    shoot = (weapon) => { 
+        if(weapon === "MAIN") return true;
+        if(weapon === "ROCKET" && this.state.rocketsLeft > 0){
+            this.state.rocketsLeft--;
+            return true;
+        }
+        return false;
     }
 }

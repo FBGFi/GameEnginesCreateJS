@@ -17,14 +17,15 @@ export class UIController{
         },
         currHP: 33,
     }
-    constructor(){
+    constructor(canvas){
+        this.canvas = canvas
     }
 
     drawUI = () => {
-        var canvas = document.getElementById("game-stage");
-        var ctx = canvas.getContext("2d");
+        //let canvas = document.getElementById("game-stage");
+        let ctx = this.canvas.getContext("2d");
         ctx.moveTo(0, this.state.uiHeight);
-        ctx.lineTo(canvas.width, this.state.uiHeight);
+        ctx.lineTo(this.canvas.width, this.state.uiHeight);
         ctx.font = `${this.state.uiFontSize}px Arial`;
         ctx.fillText(`Health left: ${this.state.currHP}/${Constants.maxHP} Missiles remaining: ${this.state.missiles}`, 10, (this.state.uiHeight/2+this.state.uiFontSize/2));
         
