@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 
 import './Game.css';
+import SVG from "../components/svg";
 
 import Constants from "../constants/commonConstants";
+import Sprites from "./sprites/sprites.js";
 
 class Game extends Component {
     state = {
