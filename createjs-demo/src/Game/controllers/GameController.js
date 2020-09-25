@@ -2,6 +2,7 @@
 
 import Constants from "../../constants/commonConstants";
 import { PlayerController } from "./PlayerController";
+import { UIController } from "./UIController"
 import { EnemyController } from "./EnemyController";
 import { BackgroundController } from "./BackgroundController";
 import playerSprite from "../sprites/playermodel.png";
@@ -18,10 +19,13 @@ export class GameController {
      * @author Aleksi - class containing game logic
      * @param {Stage} stage 
      */
-    constructor(stage, canvas) {
+    constructor(stage, canvas, ui, updateUi) {
+        this.canvas = canvas
+        this.ui = ui
         this.stage = stage;
-        this.BackgroundController = new BackgroundController(stage, canvas);
-        this.playerController = new PlayerController(stage);
+        canvas.getContext('2d').imageSmoothingEnabled = false;
+        this.playerController = new PlayerController(stage, updateUi);
+        this.UIController = new UIController(this.stage, this.canvas, this.ui)
         this.initPlayer();
 
         this.enemyController = new EnemyController(stage);
@@ -37,6 +41,10 @@ export class GameController {
         this.player.x = Constants.playerXPos;
         this.player.y = this.playerController.state.posY;
         this.stage.addChild(this.player);
+        
+        
+        
+        
         this.stage.update();
 
         document.onkeydown = this.handleKeyDown;
