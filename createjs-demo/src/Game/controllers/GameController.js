@@ -2,6 +2,7 @@
 
 import Constants from "../../constants/commonConstants";
 import { PlayerController } from "./PlayerController";
+import { EnemyController } from "./EnemyController";
 import playerSprite from "../sprites/playermodel.png";
 
 const createjs = window.createjs;
@@ -21,8 +22,31 @@ export class GameController {
         this.playerController = new PlayerController();
         this.initPlayer();
 
+        this.enemyController = new EnemyController();
+        this.spawnEnemies();
+
         createjs.Ticker.setFPS(Constants.FPS);
         createjs.Ticker.addEventListener("tick", this.handleTick);
+    }
+
+    spawnEnemies = () => {
+        this.enemyController.enemies.forEach(e => {
+            this.stage.addChild(e);
+        });
+        this.stage.update();
+    }
+
+    handleEnemyMovement = () => {
+        for (let i = this.enemyController.enemies.length - 1; i >= 0; i--) {
+
+            this.enemyController.enemies[i].x -= Constants.enemySpeed;
+
+            if (this.enemyController.enemies[i].x < 0) {
+                this.stage.removeChild(this.enemyController.enemies[i]);
+                this.enemyController.enemies.splice(i,1);
+                break;
+            }
+        }
     }
 
     initPlayer = () => {
@@ -147,7 +171,7 @@ export class GameController {
     handleTick = (event) => {
         this.playerMovement();
         this.handleProjectileMovement();
-
-        this.stage.update();
+        this.handleEnemyMovement();
+        this.stage.update(event);
     }
 }
