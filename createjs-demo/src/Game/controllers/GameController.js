@@ -4,6 +4,7 @@ import Constants from "../../constants/commonConstants";
 import { PlayerController } from "./PlayerController";
 import { UIController } from "./UIController"
 import { EnemyController } from "./EnemyController";
+import { BackgroundController } from "./BackgroundController";
 import playerSprite from "../sprites/playermodel.png";
 
 const createjs = window.createjs;
@@ -24,7 +25,7 @@ export class GameController {
         this.canvas = canvas
         this.ui = ui
         this.stage = stage;
-        canvas.getContext('2d').imageSmoothingEnabled = false;
+        this.BackgroundController = new BackgroundController(stage, canvas);
         this.playerController = new PlayerController(stage, updateUi);
         this.UIController = new UIController(this.stage, this.canvas, this.ui)
         this.initPlayer();

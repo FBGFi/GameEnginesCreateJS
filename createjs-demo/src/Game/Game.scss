@@ -1,3 +1,6 @@
+$background-color: #b2f23a;
+$background-vignette: #76a027;
+
 .Game{
     margin: auto;
     overflow: hidden;
@@ -6,5 +9,7 @@
         width: 100%;
         border: 2px solid black;
         transform-origin: top left;
+        background-color: $background-color;
+        background: radial-gradient($background-color, $background-vignette);
     }
 }

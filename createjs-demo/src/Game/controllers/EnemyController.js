@@ -1,45 +1,9 @@
 // Enemy behaviour
 import Constants, { canvasMaxHeight, canvasMaxWidth } from "../../constants/commonConstants";
-// Animated spritesheets
-import blobSpritesheet from "../sprites/blob_spritesheet.png";
-import haamuSpritesheet from "../sprites/haamu_spritesheet.png";
-import spinnerSpritesheet from "../sprites/spinner_spritesheet.png";
-// Static bitmaps
-import longboyBitmap from "../sprites/longboy.png";
+import sprites, {blob, haamu,spinner,longboy} from "../sprites/sprites.js";
+
 // create.js from window
 const createjs = window.createjs;
-// SpritesheetObjects from spritesheet jason data
-const blobSpritesheetObject = new createjs.SpriteSheet({
-    images: [blobSpritesheet],
-    frames: {width: 7, height: 5, count: 2},
-    framerate: 5,
-    animations: {
-        idle:[0,1]
-    }
-});
-const haamuSpritesheetObject= new createjs.SpriteSheet({
-    images: [haamuSpritesheet],
-    frames: {width: 5, height: 5, count: 2},
-    framerate: 5,
-    animations: {
-        idle:[0,1]
-    }
-});
-const spinnerSpritesheetObject = new createjs.SpriteSheet({
-    images: [spinnerSpritesheet],
-    frames: {width: 6, height: 6, count: 4},
-    framerate: 5,
-    animations: {
-        idle:[0,1,2,3]
-    }
-});
-
-const sprites = {
-    blob: () => {return new createjs.Sprite(blobSpritesheetObject, "idle")},
-    haamu: () => {return new createjs.Sprite(haamuSpritesheetObject, "idle")},
-    spinner: () => {return new createjs.Sprite(spinnerSpritesheetObject, "idle")},
-    longboy: () => {return new createjs.Bitmap(longboyBitmap)}
-}
 
 /**
  * @author Sami - class controlling enemies
