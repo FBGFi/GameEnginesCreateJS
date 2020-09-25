@@ -6,6 +6,8 @@ import playerSprite from "../sprites/playermodel.png";
 
 import { EnemyController } from "./EnemyController";
 import enemySprite from "../sprites/blob_0001.png";
+import enemySprite2 from "../sprites/blob_0002.png";
+import enemySprite3 from "../sprites/longboy.png";
 
 const createjs = window.createjs;
 
@@ -166,9 +168,13 @@ export class GameController {
     createEnemy = (x) => {
         let enemyController;
         let enemy;
+        let randNum;
         for (let i = 0; i < x; i++) {
+            randNum = Math.random(Math.random());
             enemyController = new EnemyController();
-            enemy = new createjs.Bitmap(enemySprite);
+            if (randNum <= 0.33) enemy = new createjs.Bitmap(enemySprite);
+            else if (randNum > 0.33 && randNum < 0.66) enemy = new createjs.Bitmap(enemySprite2);
+            else enemy = new createjs.Bitmap(enemySprite3);
             enemy.scale = Constants.playerScale;
             enemy.x = enemyController.state.pos.x;
             enemy.y = enemyController.state.pos.y;
