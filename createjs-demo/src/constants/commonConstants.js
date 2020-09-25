@@ -9,7 +9,6 @@ const FPS = 60;
 const playerHeight = 5;
 const playerScale = 5;
 const enemySpeed = 5;
-const backgroundColor = "#b2f23a"
 
 /**
  * @author Aleksi - constant variables through the app
