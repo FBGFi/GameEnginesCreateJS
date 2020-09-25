@@ -23,7 +23,7 @@ export class GameController {
         this.canvas = canvas
         this.ui = ui
         this.stage = stage;
-        canvas.getContext('2d').imageSmoothingEnabled = false;
+        this.BackgroundController = new BackgroundController(stage, canvas);
         this.playerController = new PlayerController(stage, updateUi);
         this.UIController = new UIController(this.stage, this.canvas, this.ui)
         this.initPlayer();

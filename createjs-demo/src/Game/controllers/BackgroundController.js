@@ -17,13 +17,12 @@ export class BackgroundController {
     constructor(stage, canvas){
         this.stage = stage;
         canvas.getContext('2d').imageSmoothingEnabled = false;
-
         this.initBackground();
     }
 
     initBackground = (stage) => {
         let bg = new createjs.Shape();
-        bg.graphics.beginFill(Constants.backgroundColor)
+        bg.graphics.beginFill(Constants.backgroundColor);
         bg.graphics.drawRect(0, 0, Constants.canvasMaxWidth, Constants.canvasMaxHeight); 
         this.stage.addChild(bg);
         console.log(this.stage);
