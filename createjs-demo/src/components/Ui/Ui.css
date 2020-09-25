@@ -1,10 +1,12 @@
 .Ui {
   width: 100%;
+  border-left: 2px solid black;
+  border-top: 2px solid black;
+  border-right: 2px solid black;
 }
 
 .Ui .ui-top {
   height: 25px;
-  border: 1px solid black;
 }
 
 .Ui .ui-top .ui-right {
@@ -35,14 +37,13 @@
 }
 
 .Ui .health-bar {
-  background-color: #292929;
-  border: 1px solid black;
+  border-top: 2px solid black;
   height: 25px;
   position: relative;
 }
 
 .Ui .health-bar .fill {
-  background-color: #d80000;
+  background-color: #000;
   height: 100%;
 }
 
@@ -53,5 +54,6 @@
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
+  color: #FFF;
 }
 /*# sourceMappingURL=Ui.css.map */

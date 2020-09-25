@@ -1,12 +1,14 @@
-$health: rgb(216, 0, 0);
+$health: #000;
 $healthBackground: rgb(41, 41, 41);
 
 .Ui{    
     width: 100%;
+    border-left: 2px solid black;
+    border-top: 2px solid black;
+    border-right: 2px solid black;
 
     .ui-top{
         height: 25px;
-        border: 1px solid black;
         .ui-right{
             height: 100%;
             float: left;
@@ -31,8 +33,7 @@ $healthBackground: rgb(41, 41, 41);
     }
     
     .health-bar{
-        background-color: $healthBackground;
-        border: 1px solid black;
+        border-top: 2px solid black;
         height: 25px;
         position: relative;
 
@@ -46,6 +47,7 @@ $healthBackground: rgb(41, 41, 41);
             top: 50%;
             left: 50%;
             transform: translate(-50%,-50%);
+            color: #FFF;
         }
     }
 }
