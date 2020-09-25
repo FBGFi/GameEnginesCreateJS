@@ -16,16 +16,19 @@ export class GameController {
      * @author Aleksi - class containing game logic
      * @param {Stage} stage 
      */
-    constructor(stage, canvas) {
+    constructor(stage, canvas, ui) {
         this.canvas = canvas
-
+        this.ui = ui
         this.stage = stage;
         canvas.getContext('2d').imageSmoothingEnabled = false;
         this.playerController = new PlayerController();
+        this.uiController = new UIController(this.stage, this.canvas, this.ui);
         this.initPlayer();
-
+        
         createjs.Ticker.setFPS(Constants.FPS);
         createjs.Ticker.addEventListener("tick", this.handleTick);
+        
+        this.uiController.drawUI()
     }
 
     initPlayer = () => {
@@ -35,8 +38,8 @@ export class GameController {
         this.player.y = this.playerController.state.posY;
         this.stage.addChild(this.player);
         
-        this.uiController = new UIController(this.canvas);
-        this.uiController.drawUIv2();
+        
+        
         
         this.stage.update();
 
@@ -154,9 +157,9 @@ export class GameController {
     handleTick = (event) => {
         this.playerMovement();
         this.handleProjectileMovement();
-
+        
         this.stage.update();
-        this.uiController.drawUIv2();
+        //this.uiController.drawUI();
 
     }
 }
