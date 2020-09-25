@@ -16,6 +16,7 @@ const enemySpeed = 5;
 module.exports = {
     // maximum width and height of the game canvas in pixels
     canvasMaxWidth: canvasMaxWidth,
+    // maximum height of the game canvas in pixels
     canvasMaxHeight: canvasMaxHeight,
     // initial player resources
     maxHP: maxHP,

@@ -1,5 +1,6 @@
 // Enemy behaviour
-import Constants from "../../constants/commonConstants";
+
+import Constants, { canvasMaxHeight, canvasMaxWidth } from "../../constants/commonConstants";
 // Animated spritesheets
 import blobSpritesheet from "../sprites/blob_spritesheet.png";
 import haamuSpritesheet from "../sprites/haamu_spritesheet.png";
@@ -41,20 +42,66 @@ const sprites = {
     longboy: () => {return new createjs.Bitmap(longboyBitmap)}
 }
 
-export class EnemyController{
+/**
+ * @author Sami - class controlling enemies
+ */
+export class EnemyController {
+    // Single enemy control
     state = {
-
+        maxHP: 1,
+        currentHP: 0,
+        pos: {
+            x: Constants.canvasMaxWidth,
+            y:  Constants.canvasMaxHeight * (Math.random(Math.floor(Math.random) * 10) * 0.9 + 0.05)
+        }
     }
     
     constructor(){
+        this.state.currentHP = this.state.maxHP;
+        this.state.pos.x = Constants.canvasMaxWidth * 1.05;
+        this.state.pos.y = Constants.canvasMaxHeight * (Math.random() * 0.9 + 0.05);
         this.enemies = [];
-        this.spawnEnemies(10);
+        this.spawnEnemies(2);
     }
 
-    spawnEnemies = (n) => {
-        for(let i = 0; i < n; i++) {
-            this.enemies.push(this.createEnemy(i));
+    /**
+     * @author Sami - Move this enemy on the game stage for the amount of x and y
+     * @param {Number} x 
+     * @param {Number} y 
+     */
+    move = (x, y) => {
+        this.enemies.x += x;
+        this.enemies.y += y;
+
+        return { x: x, y: y};
+    }
+
+    /**
+     * @author Sami - The enemy takes damage for the amount of damage variable
+     * @param {Number} damage 
+     */
+    takeDamage = (damage) => {
+        let newHP = this.state.currentHP -= damage;
+        if (newHP <= 0) {
+            return this.destructor;
         }
+    }
+
+    /**
+     * @author Sami - The enemy is destroyed and it creates a random number while doing so
+     */
+    destructor() {
+        return Math.random() < 0.1 ? true : false;
+    }
+
+    // General enemy control
+    spawnEnemies = (n) => {
+        setInterval(() => {
+            for(let i = 0; i < n; i++) {
+                this.enemies.push(this.createEnemy(i));
+            }
+
+        }, 2000);
     }
 
     createEnemy = (i) => {
@@ -74,7 +121,7 @@ export class EnemyController{
         enemy.scale = Constants.playerScale;
         enemy.x = Constants.canvasMaxWidth - 50;
         enemy.y = i * 50;
-        console.log("Enemy created at: " + enemy.x + ", " + enemy.y);
+        // console.log("Enemy created at: " + enemy.x + ", " + enemy.y);
         return enemy
     }
 
