@@ -105,17 +105,8 @@ export class GameController {
     }
 
     handleTick = (event) => {
-<<<<<<< HEAD
-        this.playerMovement();
-        this.handleProjectileMovement();
-        
-        this.stage.update();
-        //this.uiController.drawUI();
-
-=======
         this.playerController.playerMovement(this.player, this.state.playerDirection);
         this.playerController.handleProjectileMovement();
         this.stage.update(event);
->>>>>>> master
     }
 }
