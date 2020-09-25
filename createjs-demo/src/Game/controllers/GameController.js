@@ -22,6 +22,7 @@ export class GameController {
      * @param {Stage} stage 
      */
     constructor(stage, canvas, ui, updateUi) {
+        
         this.canvas = canvas
         this.ui = ui
         this.stage = stage;
