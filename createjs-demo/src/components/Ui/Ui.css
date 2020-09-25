@@ -1,15 +1,57 @@
 .Ui {
   width: 100%;
-  border-radius: 2px;
+}
+
+.Ui .ui-top {
+  height: 25px;
+  border: 1px solid black;
+}
+
+.Ui .ui-top .ui-right {
+  height: 100%;
+  float: left;
+  width: 50%;
+  text-align: right;
+  line-height: 25px;
+}
+
+.Ui .ui-top .ui-left {
+  padding-left: 5px;
+  height: 100%;
+  float: left;
+  width: 50%;
+  text-align: left;
+  line-height: 25px;
+}
+
+.Ui .ui-top .ui-left img {
+  margin-right: 5px;
+  width: 25px;
+  -ms-interpolation-mode: nearest-neighbor;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: -o-pixelated;
+      image-rendering: pixelated;
 }
 
 .Ui .health-bar {
+  background-color: #292929;
   border: 1px solid black;
-  height: 20px;
+  height: 25px;
+  position: relative;
 }
 
 .Ui .health-bar .fill {
-  background-color: #8f0a0a;
+  background-color: #d80000;
   height: 100%;
+}
+
+.Ui .health-bar p {
+  position: absolute;
+  margin: 0;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 /*# sourceMappingURL=Ui.css.map */
