@@ -10,34 +10,23 @@ const createjs = window.createjs;
  */
 export class EnemyController {
     // Single enemy control
-    state = {
-        maxHP: 1,
-        currentHP: 0,
-        pos: {
-            x: Constants.canvasMaxWidth,
-            y:  Constants.canvasMaxHeight * (Math.random(Math.floor(Math.random) * 10) * 0.9 + 0.05)
-        }
-    }
     
     constructor(stage){
         this.stage = stage;
-        this.state.currentHP = this.state.maxHP;
-        this.state.pos.x = Constants.canvasMaxWidth * 1.05;
-        this.state.pos.y = Constants.canvasMaxHeight * (Math.random() * 0.9 + 0.05);
         this.enemies = [];
         this.spawnEnemies(2);
+        this.handleEnemyMovement();
     }
 
     /**
      * @author Sami - Move this enemy on the game stage for the amount of x and y
-     * @param {Number} x 
-     * @param {Number} y 
+     * @param {*} enemy
+     * @param {Number} x
+     * @param {Number} y
      */
-    move = (x, y) => {
-        this.enemies.x += x;
-        this.enemies.y += y;
-
-        return { x: x, y: y};
+    move = (enemy, x, y) => {
+        enemy.x -= x;
+        enemy.y -= y;
     }
 
     /**
@@ -62,15 +51,14 @@ export class EnemyController {
     spawnEnemies = (n) => {
         setInterval(() => {
             for(let i = 0; i < n; i++) {
-                let enemy = this.createEnemy(i)
+                let enemy = this.createEnemy()
                 this.enemies.push(enemy);
                 this.stage.addChild(enemy);
             }
-
         }, 2000);
     }
 
-    createEnemy = (i) => {
+    createEnemy = () => {
         let r = Math.random();
         let enemy;
 
@@ -85,9 +73,24 @@ export class EnemyController {
         }
 
         enemy.scale = Constants.playerScale;
-        enemy.x = Constants.canvasMaxWidth - 50;
-        enemy.y = i * 50;
-        // console.log("Enemy created at: " + enemy.x + ", " + enemy.y);
+        enemy.x = Constants.canvasMaxWidth * 0.9;
+        enemy.y = Constants.canvasMaxHeight * (Math.random(Math.floor(Math.random) * 10) * 0.9 + 0.05);
+        // enemy.x = 0;
+        // enemy.y = 0; 
+
+        // enemy.scale = Constants.playerScale;
+        // enemy.x = Constants.canvasMaxWidth - 50;
+        // enemy.y = i * 50;
+        console.log("Enemy created at: " + enemy.x + ", " + enemy.y);
         return enemy
+    }
+
+    handleEnemyMovement = () => {
+        setInterval(() => {
+            for (let i = 0; i < this.enemies.length; i++) {
+                this.move(this.enemies[i], 10, 0);
+                console.log(this.enemies[i].x);
+            }
+        }, 50);
     }
 }
