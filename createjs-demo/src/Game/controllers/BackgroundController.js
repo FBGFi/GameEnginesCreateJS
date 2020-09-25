@@ -22,11 +22,13 @@ export class BackgroundController {
 
     handleWeeds() {
         let weeds = [];
-        let weedSpriteWidth = 300;
+        let weedSpriteWidth = 100 * Constants.playerScale;
+        let weedSpriteHeight = 30 * Constants.playerScale;
         let weedsNeeded = Math.ceil(Constants.canvasMaxWidth / weedSpriteWidth);
         for (let i = 0; i < weedsNeeded; i++) {
             let weed = this.createWeed();
             weed.x = weedSpriteWidth * i;
+            weed.y = Constants.canvasMaxHeight - weedSpriteHeight;
             weeds.push(weed);
             this.stage.addChild(weed);
         }
