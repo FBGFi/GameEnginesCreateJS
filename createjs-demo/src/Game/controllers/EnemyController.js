@@ -92,7 +92,6 @@ export class EnemyController {
         // enemy.scale = Constants.playerScale;
         // enemy.x = Constants.canvasMaxWidth - 50;
         // enemy.y = i * 50;
-        console.log("Enemy created at: " + enemy.x + ", " + enemy.y);
         return enemy
     }
 
@@ -104,7 +103,6 @@ export class EnemyController {
             }
         }
         
-        console.log(this.enemies.length);
     }
 
     handleTick = (event) => {
