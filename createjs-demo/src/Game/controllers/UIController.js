@@ -21,6 +21,14 @@ export class UIController{
         this.canvas = canvas
     }
 
+    drawUIv2 = () => {
+        const createjs = window.createjs
+        var g = new createjs.Graphics()
+        g.moveTo(0, this.state.uiHeight)
+        g.lineTo(this.canvas.width, this.state.uiHeight)
+        g.stroke()
+    }
+
     drawUI = () => {
         //let canvas = document.getElementById("game-stage");
         let ctx = this.canvas.getContext("2d");

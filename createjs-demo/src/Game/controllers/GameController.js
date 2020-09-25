@@ -36,7 +36,7 @@ export class GameController {
         this.stage.addChild(this.player);
         
         this.uiController = new UIController(this.canvas);
-        this.uiController.drawUI();
+        this.uiController.drawUIv2();
         
         this.stage.update();
 
@@ -156,7 +156,7 @@ export class GameController {
         this.handleProjectileMovement();
 
         this.stage.update();
-        this.uiController.drawUI();
+        this.uiController.drawUIv2();
 
     }
 }
