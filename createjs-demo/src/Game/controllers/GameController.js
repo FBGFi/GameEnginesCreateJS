@@ -2,6 +2,7 @@
 
 import Constants from "../../constants/commonConstants";
 import { PlayerController } from "./PlayerController";
+import { UIController } from "./UIController"
 import playerSprite from "../sprites/playermodel.png";
 
 const createjs = window.createjs;
@@ -16,6 +17,8 @@ export class GameController {
      * @param {Stage} stage 
      */
     constructor(stage, canvas) {
+        this.canvas = canvas
+
         this.stage = stage;
         canvas.getContext('2d').imageSmoothingEnabled = false;
         this.playerController = new PlayerController();
@@ -31,6 +34,10 @@ export class GameController {
         this.player.x = Constants.playerXPos;
         this.player.y = this.playerController.state.posY;
         this.stage.addChild(this.player);
+        
+        this.uiController = new UIController(this.canvas);
+        this.uiController.drawUI();
+        
         this.stage.update();
 
         this.playerProjectiles = [];
@@ -148,7 +155,8 @@ export class GameController {
         this.playerMovement();
         this.handleProjectileMovement();
 
-        //this.stage.update();
+        this.stage.update();
+        this.uiController.drawUI();
 
     }
 }

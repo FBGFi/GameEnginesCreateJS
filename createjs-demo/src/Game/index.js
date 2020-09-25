@@ -21,8 +21,8 @@ class Game extends Component {
         this.gameController = new GameController(this.stage,this.canvasRef);
         
         // ui ei toimi koska stage.update() game controllerissa
-        this.uiController = new UIController(this.canvasRef);
-        this.uiController.drawUI();
+        // this.uiController = new UIController(this.canvasRef);
+        // this.uiController.drawUI();
         
         window.addEventListener('resize', () => {
             if (window.innerWidth < Constants.canvasMaxWidth || this.state.scaleFactor !== 1) {
