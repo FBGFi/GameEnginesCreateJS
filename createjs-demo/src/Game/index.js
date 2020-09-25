@@ -10,7 +10,8 @@ import Constants from "../constants/commonConstants";
 class Game extends Component {
     state = {
         scaleFactor: 1,
-        hpLeft: Constants.maxHP
+        hpLeft: Constants.maxHP,
+        rocketsLeft: Constants.initRockets,
     }
 
     constructor(props) {
@@ -35,7 +36,7 @@ class Game extends Component {
     render() {
         return (
             <div className="Game" style={{ maxWidth: Constants.canvasMaxWidth}}>
-                <Ui width={this.state.hpLeft / Constants.maxHP}/>
+                <Ui width={this.state.hpLeft / Constants.maxHP} healthRemaining={this.state.hpLeft} healthMax={Constants.maxHP} rocketsRemaining={this.state.rocketsLeft}/>
 
                 <canvas
                     ref={ref => this.canvasRef = ref} 
