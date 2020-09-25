@@ -75,7 +75,7 @@ export class EnemyController{
         enemy.x = Constants.canvasMaxWidth - 50;
         enemy.y = i * 50;
         console.log("Enemy created at: " + enemy.x + ", " + enemy.y);
-        return enemy
+        return enemy;
     }
 
     destroyEnemy = (i) => {
