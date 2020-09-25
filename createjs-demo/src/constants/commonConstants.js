@@ -4,6 +4,8 @@ const maxHP = 50;
 const initRockets = 3;
 const playerXPos = canvasMaxWidth * 0.05;
 const playerMovementSpeed = 10;
+const mainWeaponDmg = 1;
+const rocketDmg = 3;
 const projectileSpeed = 30;
 const FPS = 60;
 const playerHeight = 5;
@@ -27,6 +29,8 @@ module.exports = {
     playerScale: playerScale,                   // player scaling factor
     playerMovementSpeed: playerMovementSpeed,   // players y-movement speed
     projectileSpeed: projectileSpeed,           // player projectile speed
+    mainWeaponDmg: mainWeaponDmg,               // shooting damage
+    rocketDmg: rocketDmg,                       // rocket damage
     // enemy configs
     enemySpeed: enemySpeed,                     // enemy movement speed
     // Frames per second

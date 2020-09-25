@@ -4,6 +4,7 @@ import Constants from "../../constants/commonConstants";
 import { PlayerController } from "./PlayerController";
 import { UIController } from "./UIController"
 import { EnemyController } from "./EnemyController";
+import { BackgroundController } from "./BackgroundController";
 import playerSprite from "../sprites/playermodel.png";
 
 const createjs = window.createjs;
@@ -11,8 +12,9 @@ const createjs = window.createjs;
 export class GameController {
     state = {
         playerDirection: "NONE",
-        shooting: false
-
+        shooting: false,
+        goingUp: false,
+        goingDown: false
     }
 
     /**
@@ -24,7 +26,7 @@ export class GameController {
         this.canvas = canvas
         this.ui = ui
         this.stage = stage;
-        canvas.getContext('2d').imageSmoothingEnabled = false;
+        this.BackgroundController = new BackgroundController(stage, canvas);
         this.playerController = new PlayerController(stage, updateUi);
         this.UIController = new UIController(this.stage, this.canvas, this.ui)
         this.initPlayer();
@@ -78,10 +80,12 @@ export class GameController {
         switch (e.key) {
             case "w":
             case "ArrowUp":
+                this.state.goingUp = true;
                 this.state.playerDirection = "UP";
                 break;
             case "s":
             case "ArrowDown":
+                this.state.goingDown = true;
                 this.state.playerDirection = "DOWN";
                 break;
             default:
@@ -93,9 +97,21 @@ export class GameController {
         switch (e.key) {
             case "w":
             case "ArrowUp":
+                this.state.goingUp = false;
+                if(!this.state.goingDown && !this.state.goingUp){
+                    this.state.playerDirection = "NONE";
+                } else if(this.state.goingDown){
+                    this.state.playerDirection = "DOWN"
+                }
+                break;
             case "s":
             case "ArrowDown":
-                this.state.playerDirection = "NONE";
+                this.state.goingDown = false;
+                if(!this.state.goingDown && !this.state.goingUp){
+                    this.state.playerDirection = "NONE";
+                } else if(this.state.goingUp){
+                    this.state.playerDirection = "UP"
+                }
                 break;
             case " ":
             case "r":
