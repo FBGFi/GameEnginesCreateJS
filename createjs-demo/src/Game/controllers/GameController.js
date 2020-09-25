@@ -2,6 +2,7 @@
 
 import Constants from "../../constants/commonConstants";
 import { PlayerController } from "./PlayerController";
+import { UIController } from "./UIController"
 import { EnemyController } from "./EnemyController";
 import playerSprite from "../sprites/playermodel.png";
 
@@ -17,10 +18,13 @@ export class GameController {
      * @author Aleksi - class containing game logic
      * @param {Stage} stage 
      */
-    constructor(stage, canvas) {
+    constructor(stage, canvas, ui) {
+        this.canvas = canvas
+        this.ui = ui
         this.stage = stage;
         canvas.getContext('2d').imageSmoothingEnabled = false;
         this.playerController = new PlayerController(stage);
+        this.UIController = new UIController(this.stage, this.canvas, this.ui)
         this.initPlayer();
 
         this.enemyController = new EnemyController(stage);
@@ -36,6 +40,10 @@ export class GameController {
         this.player.x = Constants.playerXPos;
         this.player.y = this.playerController.state.posY;
         this.stage.addChild(this.player);
+        
+        
+        
+        
         this.stage.update();
 
         document.onkeydown = this.handleKeyDown;
@@ -97,8 +105,17 @@ export class GameController {
     }
 
     handleTick = (event) => {
+<<<<<<< HEAD
+        this.playerMovement();
+        this.handleProjectileMovement();
+        
+        this.stage.update();
+        //this.uiController.drawUI();
+
+=======
         this.playerController.playerMovement(this.player, this.state.playerDirection);
         this.playerController.handleProjectileMovement();
         this.stage.update(event);
+>>>>>>> master
     }
 }

@@ -1,0 +1,15 @@
+.hp {
+  width: 400px;
+  height: 60px;
+}
+
+.ui-box {
+  width: 200px;
+  border-radius: 2px;
+  background-color: red;
+}
+
+.health-bar-red .health-bar-black {
+  background-color: red;
+}
+/*# sourceMappingURL=Ui.css.map */
