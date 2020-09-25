@@ -75,13 +75,13 @@ export class EnemyController {
         let enemy;
 
         if (r >= 0.5) {
-            enemy = sprites.blob;
+            enemy = sprites.blob();
         } else if (r >= 0.25) {
-            enemy = sprites.longboy;
+            enemy = sprites.longboy();
         } else if (r >= 0.1) {
-            enemy = sprites.spinner;
+            enemy = sprites.spinner();
         } else {
-            enemy = sprites.haamu;
+            enemy = sprites.haamu();
         }
 
         enemy.scale = Constants.playerScale;

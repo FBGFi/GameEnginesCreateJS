@@ -9,5 +9,6 @@
   -webkit-transform-origin: top left;
           transform-origin: top left;
   background-color: #b2f23a;
+  background: radial-gradient(#b2f23a, #76a027);
 }
 /*# sourceMappingURL=Game.css.map */
