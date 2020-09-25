@@ -4,26 +4,26 @@ import './Game.css';
 
 import Ui from "../components/Ui"
 import { GameController } from "./controllers/GameController";
-import { UIController } from "./controllers/UIController";
 
 import Constants from "../constants/commonConstants";
 
 class Game extends Component {
     state = {
-        scaleFactor: 1
+        scaleFactor: 1,
+        hpLeft: Constants.maxHP
     }
 
     constructor(props) {
         super(props)
     }
 
+    updateUi = (obj) => {
+        this.setState({...this.state, ...obj});
+    }
+
     componentDidMount() {
         this.stage = new window.createjs.Stage(this.canvasRef);
-        this.gameController = new GameController(this.stage,this.canvasRef,this.uiRef);
-        
-        // ui ei toimi koska stage.update() game controllerissa
-        // this.uiController = new UIController(this.canvasRef);
-        // this.uiController.drawUI();
+        this.gameController = new GameController(this.stage,this.canvasRef,this.uiRef, this.updateUi);
         
         window.addEventListener('resize', () => {
             if (window.innerWidth < Constants.canvasMaxWidth || this.state.scaleFactor !== 1) {
@@ -35,7 +35,7 @@ class Game extends Component {
     render() {
         return (
             <div className="Game" style={{ maxWidth: Constants.canvasMaxWidth}}>
-                <Ui width={Constants.canvasMaxWidth * (2 / Constants.maxHP)}/>
+                <Ui width={this.state.hpLeft / Constants.maxHP}/>
 
                 <canvas
                     ref={ref => this.canvasRef = ref} 
