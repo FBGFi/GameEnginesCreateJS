@@ -19,9 +19,10 @@ export class PlayerController{
         projectiles: []
     }
 
-    constructor(stage){
+    constructor(stage, updateUi){
         this.state.posY = Constants.canvasMaxWidth * 0.5625 / 2;
-        this.stage = stage;       
+        this.stage = stage;   
+        this.updateUi = updateUi;   
         createjs.Sound.registerSound(shootSound, "shoot");
         createjs.Sound.registerSound(rocketSound, "rocket");
     }
@@ -104,6 +105,8 @@ export class PlayerController{
                 scale = 5;
                 projectile = new createjs.Bitmap(bulletSprite);
                 projectile.y = this.state.posY + (Constants.playerHeight * Constants.playerScale / 2) - (scale / 2);
+                this.state.currentHP -= 5;
+                this.updateUi({hpLeft: this.state.currentHP});
                 break;
             case "ROCKET":
                 scale = 4;
