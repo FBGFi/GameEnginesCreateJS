@@ -112,6 +112,7 @@ export class PlayerController{
                 scale = 4;
                 projectile = new createjs.Bitmap(rocketSprite);
                 projectile.y = this.state.posY + (Constants.playerHeight * Constants.playerScale / 2) - (scale + scale/2);
+                this.updateUi({rocketsLeft: this.state.rocketsLeft});
                 break;
             default:
                 break;
