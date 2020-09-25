@@ -78,6 +78,6 @@ export class EnemyController{
         return enemy;
     }
 
-    destroyEnemy = (i) => {
+    destroyEnemy = (i) => { 
     }
 }

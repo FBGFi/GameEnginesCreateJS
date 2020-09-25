@@ -4,6 +4,7 @@ import Constants from "../../constants/commonConstants";
 import rocketSprite from "../sprites/rocket.png";
 import bulletSprite from "../sprites/bullet.png";
 import shootSound from "../assets/sounds/shoot.wav";
+import rocketSound from "../assets/sounds/rocket.wav";
 
 const createjs = window.createjs;
 
@@ -22,6 +23,7 @@ export class PlayerController{
         this.state.posY = Constants.canvasMaxWidth * 0.5625 / 2;
         this.stage = stage;       
         createjs.Sound.registerSound(shootSound, "shoot");
+        createjs.Sound.registerSound(rocketSound, "rocket");
     }
 
     /**
@@ -61,6 +63,7 @@ export class PlayerController{
         else if(weapon === "ROCKET" && this.state.rocketsLeft > 0){
             this.state.rocketsLeft--;
             this.createProjectile(weapon);
+            createjs.Sound.play("rocket");
         }
     }
 
