@@ -8,6 +8,7 @@ const projectileSpeed = 10;
 const FPS = 60;
 const playerHeight = 5;
 const playerScale = 5;
+const enemySpeed = 5;
 
 /**
  * @author Aleksi - constant variables through the app
@@ -17,22 +18,19 @@ module.exports = {
     canvasMaxWidth: canvasMaxWidth,
     // maximum height of the game canvas in pixels
     canvasMaxHeight: canvasMaxHeight,
-    // max HP of the player
+    // initial player resources
     maxHP: maxHP,
-    // amount of rockets at the beginning of the game
     initRockets: initRockets,
-    // player position on X-axis
-    playerXPos: playerXPos,
-    // player movement speed
-    playerMovementSpeed: playerMovementSpeed,
-    // projectile speed
-    projectileSpeed: projectileSpeed,
+    // player configs
+    playerXPos: playerXPos,                     // player default x-pos
+    playerHeight: playerHeight,                 // players sprite height in pixels
+    playerScale: playerScale,                   // player scaling factor
+    playerMovementSpeed: playerMovementSpeed,   // players y-movement speed
+    projectileSpeed: projectileSpeed,           // player projectile speed
+    // enemy configs
+    enemySpeed: enemySpeed,                     // enemy movement speed
     // Frames per second
     FPS: FPS,
-    // player height in pixels
-    playerHeight: playerHeight,
-    // player scale multiplier
-    playerScale: playerScale,
     // call this in async/await to pause 
     sleep: (ms) => new Promise(res => setTimeout(res, ms)),
     // return scalefactor for responsivity
