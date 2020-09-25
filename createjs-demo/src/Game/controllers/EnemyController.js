@@ -1,5 +1,4 @@
 // Enemy behaviour
-
 import Constants, { canvasMaxHeight, canvasMaxWidth } from "../../constants/commonConstants";
 // Animated spritesheets
 import blobSpritesheet from "../sprites/blob_spritesheet.png";
@@ -56,7 +55,8 @@ export class EnemyController {
         }
     }
     
-    constructor(){
+    constructor(stage){
+        this.stage = stage;
         this.state.currentHP = this.state.maxHP;
         this.state.pos.x = Constants.canvasMaxWidth * 1.05;
         this.state.pos.y = Constants.canvasMaxHeight * (Math.random() * 0.9 + 0.05);
@@ -98,7 +98,9 @@ export class EnemyController {
     spawnEnemies = (n) => {
         setInterval(() => {
             for(let i = 0; i < n; i++) {
-                this.enemies.push(this.createEnemy(i));
+                let enemy = this.createEnemy(i)
+                this.enemies.push(enemy);
+                this.stage.addChild(enemy);
             }
 
         }, 2000);
@@ -123,8 +125,5 @@ export class EnemyController {
         enemy.y = i * 50;
         // console.log("Enemy created at: " + enemy.x + ", " + enemy.y);
         return enemy
-    }
-
-    destroyEnemy = (i) => { 
     }
 }
