@@ -67,6 +67,11 @@ export class PlayerController{
         }
     }
 
+    /**
+     * @author Aleksi - handle player movement
+     * @param {Object} player - player object drawn to stage
+     * @param {String} direction - "UP" / "DOWN"
+     */
     playerMovement = (player, direction) => {
         switch (direction) {
             case "UP":
@@ -87,6 +92,10 @@ export class PlayerController{
         }
     }
 
+    /**
+     * @author Aleksi - create player projectiles
+     * @param {String} type - "MAIN" / "ROCKET"
+     */
     createProjectile = type => {
         let projectile;
         let scale;
@@ -110,6 +119,9 @@ export class PlayerController{
         this.stage.addChild(projectile);
     }
 
+    /**
+     * @author Aleksi - move the projectiles
+     */
     handleProjectileMovement = async () => {
         for (let i = this.state.projectiles.length - 1; i >= 0; i--) {
             if (this.state.projectiles[i] !== undefined) {
