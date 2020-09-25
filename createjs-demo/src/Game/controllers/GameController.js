@@ -3,13 +3,15 @@
 import Constants from "../../constants/commonConstants";
 import { PlayerController } from "./PlayerController";
 import { UIController } from "./UIController"
+import { EnemyController } from "./EnemyController";
 import playerSprite from "../sprites/playermodel.png";
 
 const createjs = window.createjs;
 
 export class GameController {
     state = {
-        playerDirection: "NONE"
+        playerDirection: "NONE",
+        shooting: false
     }
 
     /**
@@ -21,14 +23,15 @@ export class GameController {
         this.ui = ui
         this.stage = stage;
         canvas.getContext('2d').imageSmoothingEnabled = false;
-        this.playerController = new PlayerController();
-        this.uiController = new UIController(this.stage, this.canvas, this.ui);
+        this.playerController = new PlayerController(stage);
+        this.UIController = new UIController(this.stage, this.canvas, this.ui)
         this.initPlayer();
-        
+
+        this.enemyController = new EnemyController(stage);
+
         createjs.Ticker.setFPS(Constants.FPS);
         createjs.Ticker.addEventListener("tick", this.handleTick);
-        
-        this.uiController.drawUI()
+        createjs.Sound.setVolume(0.5);
     }
 
     initPlayer = () => {
@@ -43,44 +46,25 @@ export class GameController {
         
         this.stage.update();
 
-        this.playerProjectiles = [];
-
         document.onkeydown = this.handleKeyDown;
         document.onkeyup = this.handleKeyUp;
         document.onkeypress = this.handleKeyPress;
-    }
-
-    createPlayerProjectile = type => {
-        let projectile;
-        switch (type) {
-            case "MAIN":
-                projectile = new createjs.Shape();
-                projectile.graphics.beginFill("black").drawCircle(0, 0, 5);
-                projectile.x = this.player.x;
-                projectile.y = this.player.y;
-                this.playerProjectiles.push(projectile);
-                this.stage.addChild(projectile);
-                break;
-            case "ROCKET":
-                break;
-            default:
-                break;
-        }
     }
 
     handleKeyPress = e => {
         switch (e.key) {
             case "Space":
             case " ":
-                if (this.playerController.shoot("MAIN")) {
-                    // add sound here
-                    this.createPlayerProjectile("MAIN");
+                if (!this.state.shooting) {
+                    this.state.shooting = true;
+                    this.playerController.shoot("MAIN");
                 }
                 break;
             case "KeyR":
             case "r":
-                if (this.playerController.shoot("ROCKET")) {
-                    // add sound here
+                if (!this.state.shooting) {
+                    this.state.shooting = true;
+                    this.playerController.shoot("ROCKET");
                 }
                 break;
             default:
@@ -111,55 +95,27 @@ export class GameController {
             case "ArrowDown":
                 this.state.playerDirection = "NONE";
                 break;
+            case " ":
+            case "r":
+                this.state.shooting = false;
+                break;
             default:
                 break;
-        }
-    }
-
-    playerMovement = () => {
-        switch (this.state.playerDirection) {
-            case "UP":
-                if (this.playerController.state.posY > 0) {
-                    this.playerController.move(Constants.playerMovementSpeed);
-                    this.player.y = this.playerController.state.posY;
-                }
-                break;
-            case "DOWN":
-                if (this.playerController.state.posY < Constants.canvasMaxHeight - (Constants.playerHeight * Constants.playerScale)) {
-                    this.playerController.move(-Constants.playerMovementSpeed);
-                    this.player.y = this.playerController.state.posY;
-                }
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    handleProjectileMovement = async () => {
-        for (let i = this.playerProjectiles.length - 1; i >= 0; i--) {
-            if (this.playerProjectiles[i] !== undefined) {
-                if (this.playerProjectiles[i].x < Constants.canvasMaxWidth) {
-                    this.playerProjectiles[i].x += Constants.projectileSpeed;
-                } else if (this.playerProjectiles[i].x > Constants.canvasMaxWidth) {
-                    this.stage.removeChild(this.playerProjectiles[i]);
-                    if (this.playerProjectiles.length > 1) {
-                        await this.playerProjectiles.splice(0, i);
-                    } else {
-                        this.playerProjectiles = [];
-                    }
-                    break;
-                }
-            }
         }
     }
 
     handleTick = (event) => {
+<<<<<<< HEAD
         this.playerMovement();
         this.handleProjectileMovement();
         
         this.stage.update();
         //this.uiController.drawUI();
 
+=======
+        this.playerController.playerMovement(this.player, this.state.playerDirection);
+        this.playerController.handleProjectileMovement();
+        this.stage.update(event);
+>>>>>>> master
     }
 }
