@@ -6,10 +6,9 @@ import sprites, {weeds} from "../sprites/sprites.js";
 const createjs = window.createjs;
 
 /**
- * @author Tuukka - control background sprites etc
+ * @author Tuukka - create and move background sprites etc
  */
 export class BackgroundController {
-    // Single enemy control
     state = {
 
     }
@@ -22,8 +21,9 @@ export class BackgroundController {
 
     handleWeeds() {
         let weeds = [];
-        let weedSpriteWidth = 100 * Constants.playerScale;
-        let weedSpriteHeight = 30 * Constants.playerScale;
+        let w = sprites.weeds();
+        let weedSpriteWidth = w.spriteSheet._frameWidth * Constants.playerScale;
+        let weedSpriteHeight = w.spriteSheet._frameHeight * Constants.playerScale;
         let weedsNeeded = Math.ceil(Constants.canvasMaxWidth / weedSpriteWidth);
         for (let i = 0; i < weedsNeeded; i++) {
             let weed = this.createWeed();
@@ -32,7 +32,6 @@ export class BackgroundController {
             weeds.push(weed);
             this.stage.addChild(weed);
         }
-        console.log(weeds[2].x);
     }
 
     createWeed() {

@@ -1,15 +1,53 @@
-$red: rgb(143, 10, 10);
+$health: #000;
+$healthBackground: rgb(41, 41, 41);
 
 .Ui{    
     width: 100%;
-    border-radius: 2px;
+    border-left: 2px solid black;
+    border-top: 2px solid black;
+    border-right: 2px solid black;
 
-    .health-bar{
-        border: 1px solid black;
-        height: 20px;
-        .fill{
-            background-color: $red;
+    .ui-top{
+        height: 25px;
+        .ui-right{
             height: 100%;
+            float: left;
+            width: 50%;
+            text-align: right;
+            line-height: 25px;
+        }
+        .ui-left{
+            padding-left: 5px;
+            height: 100%;
+            float: left;
+            width: 50%;
+            text-align: left;
+            line-height: 25px;
+
+            img{
+                margin-right: 5px;
+                width: 25px;
+                image-rendering: pixelated;
+            }
+        }
+    }
+    
+    .health-bar{
+        border-top: 2px solid black;
+        height: 25px;
+        position: relative;
+
+        .fill{
+            background-color: $health;
+            height: 100%;
+        }
+        p{
+            position: absolute;
+            margin: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            color: #FFF;
         }
     }
 }
