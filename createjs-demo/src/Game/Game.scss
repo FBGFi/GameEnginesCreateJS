@@ -4,12 +4,12 @@ $background-vignette: #76a027;
 .Game{
     margin: auto;
     overflow: hidden;
+    background-color: $background-color;
+    background: radial-gradient($background-color, $background-vignette);
 
     canvas{
         width: 100%;
         border: 2px solid black;
         transform-origin: top left;
-        background-color: $background-color;
-        background: radial-gradient($background-color, $background-vignette);
     }
 }

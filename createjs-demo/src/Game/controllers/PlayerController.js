@@ -5,6 +5,7 @@ import rocketSprite from "../sprites/rocket.png";
 import bulletSprite from "../sprites/bullet.png";
 import shootSound from "../assets/sounds/shoot.wav";
 import rocketSound from "../assets/sounds/rocket.wav";
+import hurtSound from "../assets/sounds/hurt.wav";
 
 const createjs = window.createjs;
 
@@ -25,6 +26,7 @@ export class PlayerController{
         this.updateUi = updateUi;   
         createjs.Sound.registerSound(shootSound, "shoot");
         createjs.Sound.registerSound(rocketSound, "rocket");
+        createjs.Sound.registerSound(hurtSound, "hurt");
     }
 
     /**
@@ -76,15 +78,27 @@ export class PlayerController{
     playerMovement = (player, direction) => {
         switch (direction) {
             case "UP":
-                if (this.state.posY > 0) {
+                if (this.state.posY > 0) { 
+                    this.state.collided = false;  
                     this.move(Constants.playerMovementSpeed);
                     player.y = this.state.posY;
+                } else if(!this.state.collided) {   
+                    this.state.collided = true;            
+                    this.state.currentHP -= 5;
+                    createjs.Sound.play("hurt");
+                    this.updateUi({hpLeft: this.state.currentHP});
                 }
                 break;
             case "DOWN":
-                if (this.state.posY < Constants.canvasMaxHeight - (Constants.playerHeight * Constants.playerScale)) {
+                if (this.state.posY < Constants.canvasMaxHeight - (Constants.playerHeight * Constants.playerScale)) {                    
+                    this.state.collided = false;  
                     this.move(-Constants.playerMovementSpeed);
                     player.y = this.state.posY;
+                } else if(!this.state.collided) {   
+                    this.state.collided = true;            
+                    this.state.currentHP -= 5;
+                    createjs.Sound.play("hurt");
+                    this.updateUi({hpLeft: this.state.currentHP});
                 }
                 break;
 
@@ -105,8 +119,6 @@ export class PlayerController{
                 scale = 5;
                 projectile = new createjs.Bitmap(bulletSprite);
                 projectile.y = this.state.posY + (Constants.playerHeight * Constants.playerScale / 2) - (scale / 2);
-                this.state.currentHP -= 5;
-                this.updateUi({hpLeft: this.state.currentHP});
                 break;
             case "ROCKET":
                 scale = 4;
