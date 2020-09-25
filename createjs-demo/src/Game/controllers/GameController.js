@@ -11,7 +11,9 @@ const createjs = window.createjs;
 export class GameController {
     state = {
         playerDirection: "NONE",
-        shooting: false
+        shooting: false,
+        goingUp: false,
+        goingDown: false
     }
 
     /**
@@ -76,10 +78,12 @@ export class GameController {
         switch (e.key) {
             case "w":
             case "ArrowUp":
+                this.state.goingUp = true;
                 this.state.playerDirection = "UP";
                 break;
             case "s":
             case "ArrowDown":
+                this.state.goingDown = true;
                 this.state.playerDirection = "DOWN";
                 break;
             default:
@@ -91,9 +95,21 @@ export class GameController {
         switch (e.key) {
             case "w":
             case "ArrowUp":
+                this.state.goingUp = false;
+                if(!this.state.goingDown && !this.state.goingUp){
+                    this.state.playerDirection = "NONE";
+                } else if(this.state.goingDown){
+                    this.state.playerDirection = "DOWN"
+                }
+                break;
             case "s":
             case "ArrowDown":
-                this.state.playerDirection = "NONE";
+                this.state.goingDown = false;
+                if(!this.state.goingDown && !this.state.goingUp){
+                    this.state.playerDirection = "NONE";
+                } else if(this.state.goingUp){
+                    this.state.playerDirection = "UP"
+                }
                 break;
             case " ":
             case "r":
