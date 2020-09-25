@@ -1,15 +1,15 @@
-.hp {
-  width: 400px;
-  height: 60px;
-}
-
-.ui-box {
-  width: 200px;
+.Ui {
+  width: 100%;
   border-radius: 2px;
-  background-color: red;
 }
 
-.health-bar-red .health-bar-black {
-  background-color: red;
+.Ui .health-bar {
+  border: 1px solid black;
+  height: 20px;
+}
+
+.Ui .health-bar .fill {
+  background-color: #8f0a0a;
+  height: 100%;
 }
 /*# sourceMappingURL=Ui.css.map */

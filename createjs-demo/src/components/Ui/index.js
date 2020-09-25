@@ -4,10 +4,10 @@ import "./Ui.css"
 
 const Ui = (props) => {
     return(
-        <div className='ui-box'> 
-            <div className='health-bar-red hp' style={{width: props.width}}></div> 
-            <div className='health-bar-black hp'></div>
-            <div className='health-bar-text'></div> 
+        <div className='Ui'> 
+            <div className='health-bar'>
+                <div className="fill" style={{width: `calc(100% * ${props.width})`}}></div>
+            </div>
         </div>
     )
 }

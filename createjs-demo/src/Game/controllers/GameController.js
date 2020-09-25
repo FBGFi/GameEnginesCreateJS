@@ -18,12 +18,12 @@ export class GameController {
      * @author Aleksi - class containing game logic
      * @param {Stage} stage 
      */
-    constructor(stage, canvas, ui) {
+    constructor(stage, canvas, ui, updateUi) {
         this.canvas = canvas
         this.ui = ui
         this.stage = stage;
         canvas.getContext('2d').imageSmoothingEnabled = false;
-        this.playerController = new PlayerController(stage);
+        this.playerController = new PlayerController(stage, updateUi);
         this.UIController = new UIController(this.stage, this.canvas, this.ui)
         this.initPlayer();
 
