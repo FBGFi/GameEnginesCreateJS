@@ -11,9 +11,10 @@ const createjs = window.createjs;
 export class EnemyController {
     // Single enemy control
     
-    constructor(stage){
+    constructor(stage, dealDMG){
         this.stage = stage;
         this.enemies = [];
+        this.dealDMG = dealDMG;
         this.spawnEnemies(1);
         // this.handleEnemyMovement();
 
@@ -99,6 +100,7 @@ export class EnemyController {
         for (let i = 0; i < this.enemies.length; i++) {
             this.move(this.enemies[i], 5, 0);
             if (this.enemies[i].x === 0 - Constants.playerHeight) {
+                this.dealDMG(5); // dmg should be different for each enemy
                 this.removeEnemy(this.enemies[i], i);
             }
         }

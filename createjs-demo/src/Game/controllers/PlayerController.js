@@ -14,16 +14,16 @@ const createjs = window.createjs;
  */
 export class PlayerController{
     state = {
-        currentHP: Constants.maxHP,
         rocketsLeft: Constants.initRockets,
         posY: 0,
         projectiles: []
     }
 
-    constructor(stage, updateUi){
+    constructor(stage, updateUi, takeDMG){
         this.state.posY = Constants.canvasMaxWidth * 0.5625 / 2;
         this.stage = stage;   
-        this.updateUi = updateUi;   
+        this.updateUi = updateUi;
+        this.takeDMG = takeDMG;   
         createjs.Sound.registerSound(shootSound, "shoot");
         createjs.Sound.registerSound(rocketSound, "rocket");
         createjs.Sound.registerSound(hurtSound, "hurt");
@@ -49,10 +49,10 @@ export class PlayerController{
      * @author Aleksi - increase or decrease currentHP
      * @param {Number} hp - amount changed
      */
-    hpChanged = (hp) => {
-        let compHp = this.state.currentHP += hp;
-        this.state.currentHP = compHp > Constants.maxHP ? Constants.maxHP : compHp;
-    }
+    // hpChanged = (hp) => {
+    //     let compHp = this.state.currentHP += hp;
+    //     this.state.currentHP = compHp > Constants.maxHP ? Constants.maxHP : compHp;
+    // }
 
     /**
      * @author Aleksi - player is shooting
@@ -83,10 +83,9 @@ export class PlayerController{
                     this.move(Constants.playerMovementSpeed);
                     player.y = this.state.posY;
                 } else if(!this.state.collided) {   
-                    this.state.collided = true;            
-                    this.state.currentHP -= 5;
+                    this.state.collided = true;  
                     createjs.Sound.play("hurt");
-                    this.updateUi({hpLeft: this.state.currentHP});
+                    this.takeDMG(5);
                 }
                 break;
             case "DOWN":
@@ -95,10 +94,9 @@ export class PlayerController{
                     this.move(-Constants.playerMovementSpeed);
                     player.y = this.state.posY;
                 } else if(!this.state.collided) {   
-                    this.state.collided = true;            
-                    this.state.currentHP -= 5;
+                    this.state.collided = true;    
                     createjs.Sound.play("hurt");
-                    this.updateUi({hpLeft: this.state.currentHP});
+                    this.takeDMG(5);
                 }
                 break;
 

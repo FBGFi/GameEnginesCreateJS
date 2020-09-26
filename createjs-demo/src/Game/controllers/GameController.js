@@ -21,17 +21,17 @@ export class GameController {
      * @author Aleksi - class containing game logic
      * @param {Stage} stage 
      */
-    constructor(stage, canvas, ui, updateUi) {
+    constructor(stage, canvas, ui, updateUi, dealDMG) {
         
         this.canvas = canvas
         this.ui = ui
         this.stage = stage;
         this.BackgroundController = new BackgroundController(stage, canvas);
-        this.playerController = new PlayerController(stage, updateUi);
+        this.playerController = new PlayerController(stage, updateUi, dealDMG);
         this.UIController = new UIController(this.stage, this.canvas, this.ui)
         this.initPlayer();
 
-        this.enemyController = new EnemyController(stage);
+        this.enemyController = new EnemyController(stage, dealDMG);
 
         createjs.Ticker.setFPS(Constants.FPS);
         createjs.Ticker.addEventListener("tick", this.handleTick);
@@ -53,6 +53,10 @@ export class GameController {
         document.onkeydown = this.handleKeyDown;
         document.onkeyup = this.handleKeyUp;
         document.onkeypress = this.handleKeyPress;
+    }
+
+    handleGameOver = () => {
+        createjs.Ticker.removeAllEventListeners("tick");
     }
 
     handleKeyPress = e => {
