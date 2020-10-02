@@ -11,6 +11,7 @@ const FPS = 60;
 const playerHeight = 5;
 const playerScale = 5;
 const enemySpeed = 5;
+const weedSpeed = -2;
 
 /**
  * @author Aleksi - constant variables through the app
@@ -33,6 +34,8 @@ module.exports = {
     rocketDmg: rocketDmg,                       // rocket damage
     // enemy configs
     enemySpeed: enemySpeed,                     // enemy movement speed
+    // background configs
+    weedSpeed: weedSpeed,
     // Frames per second
     FPS: FPS,
     // call this in async/await to pause 

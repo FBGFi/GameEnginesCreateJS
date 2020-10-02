@@ -51,7 +51,7 @@ let spinner =  new createjs.Sprite(new createjs.SpriteSheet({
 return spinner;
 }
 
-const weeds = () => {
+const weed = () => {
 let weed =  new createjs.Sprite(new createjs.SpriteSheet({
     images: [weedsSpritesheet],
     frames: {width: 100, height: 30, count: 3},
@@ -96,4 +96,4 @@ const healthPickup  = () => {
     return healthPickup
 }
 
-export default {blob, haamu,spinner,longboy, bullet, rocket, weeds, explosion, rocketPickup, healthPickup}
+export default {blob, haamu, spinner, longboy, bullet, rocket, weed, explosion, rocketPickup, healthPickup}

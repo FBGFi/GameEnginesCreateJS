@@ -130,6 +130,6 @@ export class GameController {
         this.playerController.playerMovement(this.player, this.state.playerDirection);
         this.playerController.handleProjectileMovement();
         this.stage.update(event);
-
+        this.BackgroundController.handleWeeds();
     }
 }
