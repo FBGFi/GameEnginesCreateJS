@@ -10,16 +10,18 @@ const Ui = (props) => {
     return(
         <div className='Ui'> 
             {/* placeholder to restart the game */}
-            {props.width <= 0 ? <button onClick={() => props.restart()}>Restart Game</button> : null}
 
             <div className="ui-top">
                 <div className='ui-left'><img src={rocketImage} />{props.rocketsRemaining}</div>
-                <div className='ui-right'>PISTEET</div>
+                <div className='ui-right'>SCORE</div>
                 
             </div>
             <div className='health-bar'>
                 <div className={fillClassName} style={{width: hpWidth}}></div>
                 <p>HP: {props.healthRemaining}/{props.healthMax}</p>
+            </div>
+            <div className='restart-game'>
+                {props.width <= 0 ? <div><h1>Game Over!</h1><button onClick={() => props.restart()}>Restart Game</button></div> : null}
             </div>
         </div>
     )

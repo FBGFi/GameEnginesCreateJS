@@ -1,12 +1,12 @@
 $health: #000;
-$healthFlashing: rgb(41, 41, 41);
+$healthFlashing: rgb(54, 54, 54);
+//$healthFlashing: rgb(41, 41, 41);
 
 .Ui{    
     width: 100%;
     border-left: 2px solid black;
     border-top: 2px solid black;
     border-right: 2px solid black;
-
     .ui-top{
         height: 25px;
         .ui-right{
@@ -52,6 +52,15 @@ $healthFlashing: rgb(41, 41, 41);
             transform: translate(-50%,-50%);
             color: #FFF;
         }
+    }
+
+    .restart-game{
+        position: absolute;
+        display: inline-block;
+        top: 50%;
+        left: 50%;
+        text-align: center;
+        transform: translate(-50%,-50%);
     }
 }
 
