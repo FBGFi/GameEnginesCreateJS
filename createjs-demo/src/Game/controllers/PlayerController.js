@@ -129,6 +129,7 @@ export class PlayerController{
         }
         projectile.scale = scale;
         projectile.x = Constants.playerXPos;
+        projectile.speed = Constants.projectileSpeed;
         this.state.projectiles.push(projectile);
         this.stage.addChild(projectile);
     }
@@ -137,6 +138,6 @@ export class PlayerController{
      * @author Aleksi - move the projectiles
      */
     handleProjectileMovement = async() => {
-        this.state.projectiles = await Constants.handleMovement(this.state.projectiles, Constants.projectileSpeed, this.stage, Constants.canvasMaxWidth);
+        this.state.projectiles = await Constants.handleMovement(this.state.projectiles, this.stage, Constants.canvasMaxWidth);
     }
 }
