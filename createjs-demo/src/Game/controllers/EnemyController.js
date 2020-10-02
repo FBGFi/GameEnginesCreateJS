@@ -1,6 +1,6 @@
 // Enemy behaviour
 import Constants, { canvasMaxHeight, canvasMaxWidth } from "../../constants/commonConstants";
-import sprites, {blob, haamu,spinner,longboy} from "../sprites/sprites.js";
+import sprites, { blob, haamu, spinner, longboy, explosion } from "../sprites/sprites.js";
 
 // create.js from window
 const createjs = window.createjs;
@@ -46,13 +46,15 @@ const enemy4 = () => {
  */
 export class EnemyController {
     // Single enemy control
-    
-    constructor(stage, dealDMG){
+
+    constructor(stage, dealDMG) {
         this.stage = stage;
         this.enemies = [];
+        this.explosions = new createjs.Container();
         this.dealDMG = dealDMG;
-        this.spawnEnemies(1);
+        //this.spawnEnemies(1);
         // this.handleEnemyMovement();
+        // this.createTestExplosions();
 
         createjs.Ticker.addEventListener("tick", this.handleTick);
     }
@@ -96,21 +98,16 @@ export class EnemyController {
         return Math.random() < 0.1 ? true : false;
     }
 
-    // General enemy control
-
-    /**
-     * @author Sami - Creates enemies in intervals
-     * @param {Number} n 
-     */
-    spawnEnemies = (n) => {
-        setInterval(() => {
-            for(let i = 0; i < n; i++) {
-                let enemy = this.createEnemy();
-                this.enemies.push(enemy);
-                this.stage.addChild(enemy);
-            }
-        }, 2000);
-    }
+    // // General enemy control
+    // spawnEnemies = (n) => {
+    //     setInterval(() => {
+    //         for(let i = 0; i < n; i++) {
+    //             let enemy = this.createEnemy(2)
+    //             this.enemies.push(enemy);
+    //             this.stage.addChild(enemy);
+    //         }
+    //     }, 2000);
+    // }
 
     createEnemy = () => {
         let r = Math.random();
@@ -118,46 +115,80 @@ export class EnemyController {
 
         if (r >= 0.5) {
             enemy = enemy1();
+            enemy.damage = 1;
         } else if (r >= 0.25) {
             enemy = enemy2();
+            enemy.damage = 3;
         } else if (r >= 0.1) {
             enemy = enemy3();
+            enemy.damage = 5;
         } else {
             enemy = enemy4();
+            enemy.damage = 2;
         }
         
         // Initialize some attributes
         enemy.scale = Constants.playerScale;
         enemy.x = Constants.canvasMaxWidth;
-        enemy.y = Constants.canvasMaxHeight * (Math.random(Math.floor(Math.random) * 10) * 0.9 + 0.05);
-    
+        enemy.y = Constants.canvasMaxHeight * (Math.random(Math.floor(Math.random) * 10) * 0.9 + 0.05);   
+        enemy.hp = hp;
+        enemy.speed = -11;
         // Get a new random y position if any existing enemy already has that same y position -> no overlapping enemies
-        let hasUniqueYPos;
-        do {
-            hasUniqueYPos = true;
-            for (let i = 0; i < this.enemies.length; i++) {
-                if (enemy.y >= this.enemies[i].y - 50 && enemy.y <= this.enemies[i].y + 50) {
-                    enemy.y = Constants.canvasMaxHeight * (Math.random(Math.floor(Math.random) * 10) * 0.9 + 0.05);
-                    hasUniqueYPos = false;
-                }
-            }
-        } while (!hasUniqueYPos);
+        //let hasUniqueYPos;
+        //do {
+        //    hasUniqueYPos = true;
+        //    for (let i = 0; i < this.enemies.length; i++) {
+        //        if (enemy.y >= this.enemies[i].y - 50 && enemy.y <= this.enemies[i].y + 50) {
+        //            enemy.y = Constants.canvasMaxHeight * (Math.random(Math.floor(Math.random) * 10) * 0.9 + 0.05);
+        //            hasUniqueYPos = false;
+        //        }
+        //    }
+        //} while (!hasUniqueYPos);
         
         return enemy;
     }
+       
+    dealDMGtoPlayer = (obj) => {
+        this.dealDMG(obj.damage);
+    }
+    
+    handleEnemyMovement = async () => {
+        //console.log(this.enemies);
+        this.enemies = await Constants.handleMovement(this.enemies, this.stage, -50, this.dealDMGtoPlayer);
+        // for (let i = 0; i < this.enemies.length; i++) {
+        //     this.move(this.enemies[i], 5, 0);
+        //     if (this.enemies[i].x === 0 - Constants.playerHeight) {
+        //         this.dealDMG(5); // dmg should be different for each enemy
+        //         this.removeEnemy(this.enemies[i], i);
+        //     }
+        // }
 
-    /**
-     * @author Sami - Checks enemies positions and if they should be removed from the stage
-     */
-    handleEnemies = () => {
-        for (let i = 0; i < this.enemies.length; i++) {
-            // Handle enemies movement
-            this.move(this.enemies[i]);
-            if (this.enemies[i].x === 0 - Constants.playerHeight) {
-                this.dealDMG(5); // dmg should be different for each enemy
-                this.removeEnemy(this.enemies[i], i);
+    }
+    
+    createTestExplosions() {
+        for (let i = 0; i < 5; i++) {
+            let explosion = sprites.explosion();
+            explosion.x = 300;
+            explosion.y = (Constants.canvasMaxHeight * Math.random());
+            explosion.scale = Constants.playerScale;
+            this.explosions.addChild(explosion);
+        }
+        this.stage.addChild(this.explosions);
+    }
+
+    removeExplosions = () => {
+        for (let j = 0; j < this.explosions.children.length; j++) {
+            if (this.explosions.children[j].currentFrame >= 4) {
+                this.stage.removeChild(this.explosions.children[j]);
+                this.explosions.removeChildAt(j);
             }
         }
+    }
+    
+    spawnEnemy = () => {
+        let enemy = this.createEnemy(2)
+        this.enemies.push(enemy);
+        this.stage.addChild(enemy);
     }
 
     /**
@@ -165,6 +196,10 @@ export class EnemyController {
      * @param {*} event 
      */
     handleTick = (event) => {
-        this.handleEnemies();
+        this.removeExplosions();
+        if(Math.random() < 0.01){
+            this.spawnEnemy();
+        }
+        this.handleEnemyMovement();
     }
 }

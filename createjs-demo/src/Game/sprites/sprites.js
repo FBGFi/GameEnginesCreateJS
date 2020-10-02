@@ -4,10 +4,13 @@ import blobSpritesheet from "./blob_spritesheet.png";
 import haamuSpritesheet from "./haamu_spritesheet.png";
 import spinnerSpritesheet from "./spinner_spritesheet.png";
 import weedsSpritesheet from "./weeds_spritesheet.png";
+import explosionSpritesheet from "./explosion_spritesheet.png";
 // Static bitmaps
 import longboyBitmap from "./longboy.png";
 import bulletBitmap from "./bullet.png";
 import rocketBitmap from "./rocket.png";
+import rocketPickupBitmap from "./rocket_pickup.png";
+import healthPickupBitmap from "./health_pickup.png";
 // create.js from window
 const createjs = window.createjs;
 
@@ -60,6 +63,18 @@ let weed =  new createjs.Sprite(new createjs.SpriteSheet({
 return weed;
 }
 
+const explosion  = () => {
+let explosion = new createjs.Sprite(new createjs.SpriteSheet({
+    images: [explosionSpritesheet],
+    frames: {width: 5, height: 5, count: 5},
+    framerate: 8,
+    animations: {
+        explode:[0,1,2,3,4]
+    }
+}), "explode");
+return explosion
+}
+
 const longboy  = () => {
     let longboy = new createjs.Bitmap(longboyBitmap);
     return longboy
@@ -72,5 +87,13 @@ const rocket  = () => {
     let rocket = new createjs.Bitmap(rocketBitmap);
     return rocket
 }
+const rocketPickup  = () => {
+    let rocketPickup = new createjs.Bitmap(rocketPickupBitmap);
+    return rocketPickup
+}
+const healthPickup  = () => {
+    let healthPickup = new createjs.Bitmap(healthPickupBitmap);
+    return healthPickup
+}
 
-export default {blob, haamu,spinner,longboy, bullet, rocket, weeds}
+export default {blob, haamu,spinner,longboy, bullet, rocket, weeds, explosion, rocketPickup, healthPickup}

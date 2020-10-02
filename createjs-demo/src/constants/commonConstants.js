@@ -40,13 +40,18 @@ module.exports = {
     // return scalefactor for responsivity
     scaleFactor: () => window.innerWidth >= canvasMaxWidth ? 1 : window.innerWidth / canvasMaxWidth,
     // handle movement for gameobjects
-    handleMovement: async(objArr, speed, stage, removePoint) => {
+    handleMovement: async (objArr, stage, removePoint, onRemoval = undefined) => {
         for (let i = objArr.length - 1; i >= 0; i--) {
             if (objArr[i] !== undefined) {
-                if (objArr[i].x < removePoint) {
-                    objArr[i].x += speed;
-                } else if (objArr[i].x > removePoint) {
-                    stage.removeChild(objArr[i]);
+                if ((objArr[i].speed > 0 && objArr[i].x <= removePoint) || (objArr[i].speed < 0 && objArr[i].x >= removePoint)) {
+                    objArr[i].x += objArr[i].speed;
+                } else {
+                    await stage.removeChild(objArr[i]);
+                    if (onRemoval != undefined && !objArr[i].removed) {
+                        objArr[i].removed = true;
+                        onRemoval(objArr[i]);
+                    }
+
                     if (objArr.length > 1) {
                         await objArr.splice(0, i);
                     } else {
