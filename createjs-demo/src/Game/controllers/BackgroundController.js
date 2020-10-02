@@ -1,6 +1,6 @@
 // Enemy behaviour
 import Constants from "../../constants/commonConstants";
-import sprites, {weeds} from "../sprites/sprites.js";
+import sprites, {weeds, explosion} from "../sprites/sprites.js";
 
 // create.js from window
 const createjs = window.createjs;
@@ -14,9 +14,11 @@ export class BackgroundController {
     }
     
     constructor(stage, canvas){
-        this.stage = stage;
         canvas.getContext('2d').imageSmoothingEnabled = false;
-        this.handleWeeds();
+        this.stage = stage;
+
+        this.handleWeeds();       
+
     }
 
     handleWeeds() {

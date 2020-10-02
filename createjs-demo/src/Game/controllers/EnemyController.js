@@ -1,6 +1,6 @@
 // Enemy behaviour
 import Constants, { canvasMaxHeight, canvasMaxWidth } from "../../constants/commonConstants";
-import sprites, {blob, haamu,spinner,longboy} from "../sprites/sprites.js";
+import sprites, {blob, haamu,spinner,longboy, explosion} from "../sprites/sprites.js";
 
 // create.js from window
 const createjs = window.createjs;
@@ -14,9 +14,11 @@ export class EnemyController {
     constructor(stage, dealDMG){
         this.stage = stage;
         this.enemies = [];
+        this.explosions = new createjs.Container();
         this.dealDMG = dealDMG;
         this.spawnEnemies(1);
         // this.handleEnemyMovement();
+        // this.createTestExplosions();
 
         // createjs.Ticker.setFPS(Constants.FPS);
         createjs.Ticker.addEventListener("tick", this.handleTick);
@@ -107,7 +109,28 @@ export class EnemyController {
         
     }
 
+    createTestExplosions() {
+        for (let i = 0; i < 5; i++) {
+            let explosion = sprites.explosion();
+            explosion.x = 300;
+            explosion.y = (Constants.canvasMaxHeight * Math.random());
+            explosion.scale = Constants.playerScale;
+            this.explosions.addChild(explosion);
+        }
+        this.stage.addChild(this.explosions);
+    }
+
+    removeExplosions = () => {
+        for(let j = 0; j < this.explosions.children.length; j++) { 
+            if(this.explosions.children[j].currentFrame >= 4) { 
+                this.stage.removeChild(this.explosions.children[j]);
+                this.explosions.removeChildAt(j); 
+            }
+        }
+    }
+
     handleTick = (event) => {
         this.handleEnemyMovement();
+        this.removeExplosions();
     }
 }
