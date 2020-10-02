@@ -11,6 +11,7 @@ const FPS = 60;
 const playerHeight = 5;
 const playerScale = 5;
 const enemySpeed = 5;
+const weedSpeed = -2;
 const gameSpeedUpInterval = 20000;
 const initEnemySpawnRate = 2000;
 
@@ -35,6 +36,8 @@ module.exports = {
     rocketDmg: rocketDmg,                       // rocket damage
     // enemy configs
     enemySpeed: enemySpeed,                     // enemy movement speed
+    // background configs
+    weedSpeed: weedSpeed,
     // Frames per second
     FPS: FPS,
     // interval the game speeds up at
