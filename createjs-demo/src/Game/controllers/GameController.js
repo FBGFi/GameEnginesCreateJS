@@ -35,6 +35,7 @@ export class GameController {
 
         createjs.Ticker.setFPS(Constants.FPS);
         createjs.Ticker.addEventListener("tick", this.handleTick);
+        createjs.Ticker.init();
         createjs.Sound.setVolume(0.5);
     }
 
@@ -56,7 +57,8 @@ export class GameController {
     }
 
     handleGameOver = () => {
-        createjs.Ticker.removeAllEventListeners("tick");
+        createjs.Ticker.reset();
+        
     }
 
     handleKeyPress = e => {

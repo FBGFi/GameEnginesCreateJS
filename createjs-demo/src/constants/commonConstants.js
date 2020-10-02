@@ -11,6 +11,8 @@ const FPS = 60;
 const playerHeight = 5;
 const playerScale = 5;
 const enemySpeed = 5;
+const gameSpeedUpInterval = 20000;
+const initEnemySpawnRate = 2000;
 
 /**
  * @author Aleksi - constant variables through the app
@@ -35,23 +37,28 @@ module.exports = {
     enemySpeed: enemySpeed,                     // enemy movement speed
     // Frames per second
     FPS: FPS,
+    // interval the game speeds up at
+    gameSpeedUpInterval: gameSpeedUpInterval,
+    // initial enemy spawn rate
+    initEnemySpawnRate: initEnemySpawnRate,
     // call this in async/await to pause 
     sleep: (ms) => new Promise(res => setTimeout(res, ms)),
     // return scalefactor for responsivity
     scaleFactor: () => window.innerWidth >= canvasMaxWidth ? 1 : window.innerWidth / canvasMaxWidth,
     // handle movement for gameobjects
-    handleMovement: async(objArr, speed, stage, removePoint) => {
+    handleMovement: async (objArr, stage, removePoint, onRemoval = undefined) => {
         for (let i = objArr.length - 1; i >= 0; i--) {
             if (objArr[i] !== undefined) {
-                if (objArr[i].x < removePoint) {
-                    objArr[i].x += speed;
-                } else if (objArr[i].x > removePoint) {
-                    stage.removeChild(objArr[i]);
-                    if (objArr.length > 1) {
-                        await objArr.splice(0, i);
-                    } else {
-                        objArr = [];
+                if ((objArr[i].speed > 0 && objArr[i].x <= removePoint) || (objArr[i].speed < 0 && objArr[i].x >= removePoint)) {
+                    objArr[i].x += objArr[i].speed;
+                } else {
+                    await stage.removeChild(objArr[i]);
+                    if (onRemoval != undefined && !objArr[i].removed) {
+                        objArr[i].removed = true;
+                        onRemoval(objArr[i]);
                     }
+
+                    await objArr.splice(i, 1);
                     break;
                 }
             }
