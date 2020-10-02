@@ -12,6 +12,7 @@ const playerHeight = 5;
 const playerScale = 5;
 const enemySpeed = 5;
 const enemyHitBoxSize = 7;
+const weedSpeed = -2;
 const gameSpeedUpInterval = 20000;
 const initEnemySpawnRate = 2000;
 
@@ -38,6 +39,8 @@ module.exports = {
     enemySpeed: enemySpeed,                     // enemy movement speed
     // hit box size for enemy collision
     enemyHitBoxSize: enemyHitBoxSize,
+    // background configs
+    weedSpeed: weedSpeed,
     // Frames per second
     FPS: FPS,
     // interval the game speeds up at

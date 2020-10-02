@@ -133,6 +133,6 @@ export class GameController {
         this.playerController.handleProjectileMovement();
         this.playerController.checkIfEnemyHit(this.enemyController.enemies);
         this.stage.update(event);
-
+        this.BackgroundController.handleWeeds();
     }
 }
