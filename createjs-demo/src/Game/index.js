@@ -11,6 +11,7 @@ const initState = {
     scaleFactor: 1,
     hpLeft: Constants.maxHP,
     rocketsLeft: Constants.initRockets,
+    score: 0
 }
 
 class Game extends Component {
@@ -35,10 +36,14 @@ class Game extends Component {
         this.updateUi({ hpLeft: this.state.hpLeft - amount })
     }
 
+    addScore = (amount) => {
+        this.updateUi({score: this.state.score + amount})
+    }
+
     startGame = () => {
         this.setState(initState);
         this.stage = new window.createjs.Stage(this.canvasRef);
-        this.gameController = new GameController(this.stage, this.canvasRef, this.uiRef, this.updateUi, this.dealDMG);
+        this.gameController = new GameController(this.stage, this.canvasRef, this.uiRef, this.updateUi, this.dealDMG, this.addScore);
     }
 
     componentDidMount() {
@@ -49,7 +54,7 @@ class Game extends Component {
     render() {
         return (
             <div className="Game" style={{ maxWidth: Constants.canvasMaxWidth }}> 
-                <Ui width={this.state.hpLeft / Constants.maxHP} restart={this.startGame} healthRemaining={this.state.hpLeft} healthMax={Constants.maxHP} rocketsRemaining={this.state.rocketsLeft} uiHeight={Constants.canvasMaxHeight} />
+                <Ui width={this.state.hpLeft / Constants.maxHP} restart={this.startGame} healthRemaining={this.state.hpLeft} healthMax={Constants.maxHP} rocketsRemaining={this.state.rocketsLeft} uiHeight={Constants.canvasMaxHeight} score={this.state.score} />
                 <canvas
                     ref={ref => this.canvasRef = ref}
                     width={Constants.canvasMaxWidth}

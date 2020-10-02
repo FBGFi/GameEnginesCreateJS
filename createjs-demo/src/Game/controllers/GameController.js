@@ -21,13 +21,13 @@ export class GameController {
      * @author Aleksi - class containing game logic
      * @param {Stage} stage 
      */
-    constructor(stage, canvas, ui, updateUi, dealDMG) {
+    constructor(stage, canvas, ui, updateUi, dealDMG, addScore) {
         
         this.canvas = canvas
         this.ui = ui
         this.stage = stage;
         this.BackgroundController = new BackgroundController(stage, canvas);
-        this.playerController = new PlayerController(stage, updateUi, dealDMG);
+        this.playerController = new PlayerController(stage, updateUi, dealDMG, addScore);
         this.UIController = new UIController(this.stage, this.canvas, this.ui)
         this.initPlayer();
 

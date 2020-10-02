@@ -19,11 +19,12 @@ export class PlayerController {
         projectiles: []
     }
 
-    constructor(stage, updateUi, takeDMG) {
+    constructor(stage, updateUi, takeDMG, addScore) {
         this.state.posY = Constants.canvasMaxWidth * 0.5625 / 2;
         this.stage = stage;
         this.updateUi = updateUi;
         this.takeDMG = takeDMG;
+        this.addScore = addScore;
         createjs.Sound.registerSound(shootSound, "shoot");
         createjs.Sound.registerSound(rocketSound, "rocket");
         createjs.Sound.registerSound(hurtSound, "hurt");
@@ -167,6 +168,7 @@ export class PlayerController {
                         enemies[i].hp -= this.state.projectiles[j].weapon == "MAIN" ? Constants.mainWeaponDmg : Constants.rocketDmg;
                         if (enemies[i].hp <= 0) {
                             enemies[i].destroyed = true;
+                            this.addScore(enemies[i].score);
                         }
                     }
                 }

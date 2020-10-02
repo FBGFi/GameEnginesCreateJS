@@ -8,28 +8,36 @@ const createjs = window.createjs;
 const enemy1 = () => {
     let enemy = sprites.blob();
     enemy.hp = 3;
+    enemy.score = 30;
     enemy.speed = -4;
+    enemy.damage = 1;
     return enemy;
 }
 
 const enemy2 = () => {
     let enemy = sprites.longboy();
     enemy.hp = 1;
+    enemy.score = 10;
     enemy.speed = -8;
+    enemy.damage = 3;
     return enemy;
 }
 
 const enemy3 = () => {
     let enemy = sprites.spinner();
     enemy.hp = 4;
+    enemy.score = 40;
     enemy.speed = -2;
+    enemy.damage = 5;
     return enemy;
 }
 
 const enemy4 = () => {
     let enemy = sprites.haamu();
     enemy.hp = 2;
+    enemy.score = 20;
     enemy.speed = -6;
+    enemy.damage = 2;
     return enemy;
 }
 
@@ -107,16 +115,12 @@ export class EnemyController {
 
         if (r >= 0.5) {
             enemy = enemy1();
-            enemy.damage = 1;
         } else if (r >= 0.25) {
             enemy = enemy2();
-            enemy.damage = 3;
         } else if (r >= 0.1) {
             enemy = enemy3();
-            enemy.damage = 5;
         } else {
             enemy = enemy4();
-            enemy.damage = 2;
         }
         
         // Initialize some attributes
