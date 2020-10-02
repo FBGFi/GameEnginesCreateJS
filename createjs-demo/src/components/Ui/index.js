@@ -13,7 +13,7 @@ const Ui = (props) => {
 
             <div className="ui-top">
                 <div className='ui-left'><img src={rocketImage} />{props.rocketsRemaining}</div>
-                <div className='ui-right'>PISTEET</div>
+                <div className='ui-right'>SCORE</div>
                 
             </div>
             <div className='health-bar'>

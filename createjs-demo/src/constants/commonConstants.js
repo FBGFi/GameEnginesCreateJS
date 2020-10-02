@@ -38,5 +38,24 @@ module.exports = {
     // call this in async/await to pause 
     sleep: (ms) => new Promise(res => setTimeout(res, ms)),
     // return scalefactor for responsivity
-    scaleFactor: () => window.innerWidth >= canvasMaxWidth ? 1 : window.innerWidth / canvasMaxWidth
+    scaleFactor: () => window.innerWidth >= canvasMaxWidth ? 1 : window.innerWidth / canvasMaxWidth,
+    // handle movement for gameobjects
+    handleMovement: async(objArr, speed, stage, removePoint) => {
+        for (let i = objArr.length - 1; i >= 0; i--) {
+            if (objArr[i] !== undefined) {
+                if (objArr[i].x < removePoint) {
+                    objArr[i].x += speed;
+                } else if (objArr[i].x > removePoint) {
+                    stage.removeChild(objArr[i]);
+                    if (objArr.length > 1) {
+                        await objArr.splice(0, i);
+                    } else {
+                        objArr = [];
+                    }
+                    break;
+                }
+            }
+        }
+        return objArr;
+    }
 }
