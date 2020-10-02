@@ -47,8 +47,8 @@ class Game extends Component {
 
     render() {
         return (
-            <div className="Game" style={{ maxWidth: Constants.canvasMaxWidth }}>
-                <Ui width={this.state.hpLeft / Constants.maxHP} restart={this.startGame} healthRemaining={this.state.hpLeft} healthMax={Constants.maxHP} rocketsRemaining={this.state.rocketsLeft} />
+            <div className="Game" style={{ maxWidth: Constants.canvasMaxWidth }}> 
+                <Ui width={this.state.hpLeft / Constants.maxHP} restart={this.startGame} healthRemaining={this.state.hpLeft} healthMax={Constants.maxHP} rocketsRemaining={this.state.rocketsLeft} uiHeight={Constants.canvasMaxHeight} />
                 <canvas
                     ref={ref => this.canvasRef = ref}
                     width={Constants.canvasMaxWidth}

@@ -3,6 +3,7 @@
   border-left: 2px solid black;
   border-top: 2px solid black;
   border-right: 2px solid black;
+  position: relative;
 }
 
 .Ui .ui-top {
@@ -60,6 +61,15 @@
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   color: #FFF;
+}
+
+.Ui .restart-game {
+  position: absolute;
+  display: inline-block;
+  left: 50%;
+  text-align: center;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 
 @-webkit-keyframes flash_hp {
