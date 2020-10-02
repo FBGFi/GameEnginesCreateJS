@@ -57,8 +57,8 @@ export class GameController {
     }
 
     handleGameOver = () => {
-        createjs.Ticker.reset();
-        
+        createjs.Sound.setVolume(0);
+        createjs.Ticker.reset();        
     }
 
     handleKeyPress = e => {
