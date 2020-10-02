@@ -20,6 +20,8 @@ const enemy2 = () => {
     enemy.score = 10;
     enemy.speed = -8;
     enemy.damage = 3;
+    enemy.ySpeed = 10;
+    enemy.yConstraint = 20;
     return enemy;
 }
 
@@ -29,6 +31,8 @@ const enemy3 = () => {
     enemy.score = 40;
     enemy.speed = -2;
     enemy.damage = 5;
+    enemy.ySpeed = 2;
+    enemy.yConstraint = 100;
     return enemy;
 }
 
@@ -126,7 +130,14 @@ export class EnemyController {
         // Initialize some attributes
         enemy.scale = Constants.playerScale;
         enemy.x = Constants.canvasMaxWidth;
-        enemy.y = Constants.canvasMaxHeight * (Math.random(Math.floor(Math.random) * 10) * 0.9 + 0.05);   
+        enemy.y = Constants.canvasMaxHeight * (Math.random(Math.floor(Math.random) * 10) * 0.9 + 0.05); 
+        if(enemy.yConstraint !== undefined){
+            enemy.y += enemy.yConstraint;
+            if(enemy.y >= Constants.canvasMaxHeight){
+                enemy.y -= enemy.yConstraint * 3;
+            }
+        }
+        enemy.yInit = enemy.y;
         enemy.destroyed = false;
         
         return enemy;
@@ -176,7 +187,7 @@ export class EnemyController {
             this.spawnEnemy();
         }
         if(Math.round(createjs.Ticker.getTime()) % Constants.gameSpeedUpInterval < 1000 / Constants.FPS){
-            this.enemySpawnRate -= 100;
+            if(this.enemySpawnRate > 100) this.enemySpawnRate -= 100;
         }
         this.handleEnemyMovement();
     }

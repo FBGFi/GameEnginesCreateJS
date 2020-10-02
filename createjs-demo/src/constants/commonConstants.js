@@ -13,8 +13,8 @@ const playerScale = 5;
 const enemySpeed = 5;
 const enemyHitBoxSize = 7;
 const weedSpeed = -2;
-const gameSpeedUpInterval = 20000;
-const initEnemySpawnRate = 2000;
+const gameSpeedUpInterval = 15000;
+const initEnemySpawnRate = 1500;
 
 /**
  * @author Aleksi - constant variables through the app
@@ -62,6 +62,17 @@ module.exports = {
                 }
                 else if ((objArr[i].speed > 0 && objArr[i].x <= removePoint) || (objArr[i].speed < 0 && objArr[i].x >= removePoint)) {
                     objArr[i].x += objArr[i].speed;
+
+                    if(objArr[i].ySpeed !== undefined){
+                        if((objArr[i].yInit + objArr[i].yConstraint < objArr[i].y && objArr[i].ySpeed > 0)
+                        ||
+                        (objArr[i].yInit + objArr[i].yConstraint > objArr[i].y && objArr[i].ySpeed < 0)){
+                    
+                            objArr[i].yConstraint = -objArr[i].yConstraint;
+                            objArr[i].ySpeed = -objArr[i].ySpeed;
+                        }
+                        objArr[i].y += objArr[i].ySpeed;
+                    }
                 } else {
                     await stage.removeChild(objArr[i]);
                     if (onRemoval != undefined && !objArr[i].removed) {
