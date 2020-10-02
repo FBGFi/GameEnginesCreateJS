@@ -9,6 +9,8 @@ import explosionSpritesheet from "./explosion_spritesheet.png";
 import longboyBitmap from "./longboy.png";
 import bulletBitmap from "./bullet.png";
 import rocketBitmap from "./rocket.png";
+import rocketPickupBitmap from "./rocket_pickup.png";
+import healthPickupBitmap from "./health_pickup.png";
 // create.js from window
 const createjs = window.createjs;
 
@@ -85,5 +87,13 @@ const rocket  = () => {
     let rocket = new createjs.Bitmap(rocketBitmap);
     return rocket
 }
+const rocketPickup  = () => {
+    let rocketPickup = new createjs.Bitmap(rocketPickupBitmap);
+    return rocketPickup
+}
+const healthPickup  = () => {
+    let healthPickup = new createjs.Bitmap(healthPickupBitmap);
+    return healthPickup
+}
 
-export default {blob, haamu,spinner,longboy, bullet, rocket, weeds, explosion}
+export default {blob, haamu,spinner,longboy, bullet, rocket, weeds, explosion, rocketPickup, healthPickup}
