@@ -7,37 +7,29 @@ const createjs = window.createjs;
 
 const enemy1 = () => {
     let enemy = sprites.blob();
-    const hp = 3;
-    const speed = 4;
-    enemy.hp = hp;
-    enemy.speed = speed;
+    enemy.hp = 3;
+    enemy.speed = -4;
     return enemy;
 }
 
 const enemy2 = () => {
     let enemy = sprites.longboy();
-    const hp = 1;
-    const speed = 8;
-    enemy.hp = hp;
-    enemy.speed = speed;
+    enemy.hp = 1;
+    enemy.speed = -8;
     return enemy;
 }
 
 const enemy3 = () => {
     let enemy = sprites.spinner();
-    const hp = 4;
-    const speed = 2;
-    enemy.hp = hp;
-    enemy.speed = speed;
+    enemy.hp = 4;
+    enemy.speed = -2;
     return enemy;
 }
 
 const enemy4 = () => {
     let enemy = sprites.haamu();
-    const hp = 2;
-    const speed = 6;
-    enemy.hp = hp;
-    enemy.speed = speed;
+    enemy.hp = 2;
+    enemy.speed = -6;
     return enemy;
 }
 
@@ -52,10 +44,10 @@ export class EnemyController {
         this.enemies = [];
         this.explosions = new createjs.Container();
         this.dealDMG = dealDMG;
+        this.enemySpawnRate = Constants.initEnemySpawnRate;
         //this.spawnEnemies(1);
         // this.handleEnemyMovement();
         // this.createTestExplosions();
-
         createjs.Ticker.addEventListener("tick", this.handleTick);
     }
 
@@ -131,8 +123,6 @@ export class EnemyController {
         enemy.scale = Constants.playerScale;
         enemy.x = Constants.canvasMaxWidth;
         enemy.y = Constants.canvasMaxHeight * (Math.random(Math.floor(Math.random) * 10) * 0.9 + 0.05);   
-        enemy.hp = hp;
-        enemy.speed = -11;
         // Get a new random y position if any existing enemy already has that same y position -> no overlapping enemies
         //let hasUniqueYPos;
         //do {
@@ -153,16 +143,7 @@ export class EnemyController {
     }
     
     handleEnemyMovement = async () => {
-        //console.log(this.enemies);
         this.enemies = await Constants.handleMovement(this.enemies, this.stage, -50, this.dealDMGtoPlayer);
-        // for (let i = 0; i < this.enemies.length; i++) {
-        //     this.move(this.enemies[i], 5, 0);
-        //     if (this.enemies[i].x === 0 - Constants.playerHeight) {
-        //         this.dealDMG(5); // dmg should be different for each enemy
-        //         this.removeEnemy(this.enemies[i], i);
-        //     }
-        // }
-
     }
     
     createTestExplosions() {
@@ -197,8 +178,11 @@ export class EnemyController {
      */
     handleTick = (event) => {
         this.removeExplosions();
-        if(Math.random() < 0.01){
+        if(Math.round(createjs.Ticker.getTime()) % this.enemySpawnRate < 1000 / Constants.FPS){
             this.spawnEnemy();
+        }
+        if(Math.round(createjs.Ticker.getTime()) % Constants.gameSpeedUpInterval < 1000 / Constants.FPS){
+            this.enemySpawnRate -= 100;
         }
         this.handleEnemyMovement();
     }

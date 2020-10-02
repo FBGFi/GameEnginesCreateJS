@@ -11,6 +11,8 @@ const FPS = 60;
 const playerHeight = 5;
 const playerScale = 5;
 const enemySpeed = 5;
+const gameSpeedUpInterval = 20000;
+const initEnemySpawnRate = 2000;
 
 /**
  * @author Aleksi - constant variables through the app
@@ -35,6 +37,10 @@ module.exports = {
     enemySpeed: enemySpeed,                     // enemy movement speed
     // Frames per second
     FPS: FPS,
+    // interval the game speeds up at
+    gameSpeedUpInterval: gameSpeedUpInterval,
+    // initial enemy spawn rate
+    initEnemySpawnRate: initEnemySpawnRate,
     // call this in async/await to pause 
     sleep: (ms) => new Promise(res => setTimeout(res, ms)),
     // return scalefactor for responsivity
@@ -52,11 +58,7 @@ module.exports = {
                         onRemoval(objArr[i]);
                     }
 
-                    if (objArr.length > 1) {
-                        await objArr.splice(0, i);
-                    } else {
-                        objArr = [];
-                    }
+                    await objArr.splice(i, 1);
                     break;
                 }
             }
