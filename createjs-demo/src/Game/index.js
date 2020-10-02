@@ -21,16 +21,24 @@ class Game extends Component {
     }
 
     updateUi = (obj) => {
-        this.setState({...this.state, ...obj});
-        if(this.state.hpLeft <= 0){
-            this.startGame();
+        this.setState({ ...this.state, ...obj });
+        if (this.state.hpLeft <= 0) {
+            this.gameController.handleGameOver();
         }
+    }
+
+    /**
+     * @author Aleksi - deal damage to the player
+     * @param {Number} amount -> amount of the damage dealt
+     */
+    dealDMG = (amount) => {
+        this.updateUi({ hpLeft: this.state.hpLeft - amount })
     }
 
     startGame = () => {
         this.setState(initState);
         this.stage = new window.createjs.Stage(this.canvasRef);
-        this.gameController = new GameController(this.stage,this.canvasRef,this.uiRef, this.updateUi);       
+        this.gameController = new GameController(this.stage, this.canvasRef, this.uiRef, this.updateUi, this.dealDMG);
     }
 
     componentDidMount() {
@@ -39,13 +47,13 @@ class Game extends Component {
 
     render() {
         return (
-            <div className="Game" style={{ maxWidth: Constants.canvasMaxWidth}}>
-                <Ui width={this.state.hpLeft / Constants.maxHP} healthRemaining={this.state.hpLeft} healthMax={Constants.maxHP} rocketsRemaining={this.state.rocketsLeft}/>
+            <div className="Game" style={{ maxWidth: Constants.canvasMaxWidth }}>
+                <Ui width={this.state.hpLeft / Constants.maxHP} restart={this.startGame} healthRemaining={this.state.hpLeft} healthMax={Constants.maxHP} rocketsRemaining={this.state.rocketsLeft} />
                 <canvas
-                    ref={ref => this.canvasRef = ref} 
-                    width={Constants.canvasMaxWidth} 
-                    height={Constants.canvasMaxHeight} 
-                     />
+                    ref={ref => this.canvasRef = ref}
+                    width={Constants.canvasMaxWidth}
+                    height={Constants.canvasMaxHeight}
+                />
             </div>
         );
     }

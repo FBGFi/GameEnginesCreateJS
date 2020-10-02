@@ -47,12 +47,14 @@ const enemy4 = () => {
 export class EnemyController {
     // Single enemy control
     
-    constructor(stage){
+    constructor(stage, dealDMG){
         this.stage = stage;
         this.enemies = [];
-        this.spawnEnemies(2);
+        this.dealDMG = dealDMG;
+        this.spawnEnemies(1);
+        // this.handleEnemyMovement();
 
-        createjs.Ticker.addEventListener("tick", this.handleTick);
+        // createjs.Ticker.addEventListener("tick", this.handleTick);
     }
 
     /**
@@ -150,8 +152,9 @@ export class EnemyController {
     handleEnemies = () => {
         for (let i = 0; i < this.enemies.length; i++) {
             // Handle enemies movement
-            this.move(this.enemies[i]);
-            if (this.enemies[i].x <= 0 - 50) {
+            this.move(this.enemies[i], 5, 0);
+            if (this.enemies[i].x === 0 - Constants.playerHeight) {
+                this.dealDMG(5); // dmg should be different for each enemy
                 this.removeEnemy(this.enemies[i], i);
             }
         }

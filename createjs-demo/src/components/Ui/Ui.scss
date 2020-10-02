@@ -1,5 +1,5 @@
 $health: #000;
-$healthBackground: rgb(41, 41, 41);
+$healthFlashing: rgb(41, 41, 41);
 
 .Ui{    
     width: 100%;
@@ -40,6 +40,9 @@ $healthBackground: rgb(41, 41, 41);
         .fill{
             background-color: $health;
             height: 100%;
+            &.flashing{
+                animation: flash_hp 0.3s infinite alternate;
+            }
         }
         p{
             position: absolute;
@@ -49,5 +52,14 @@ $healthBackground: rgb(41, 41, 41);
             transform: translate(-50%,-50%);
             color: #FFF;
         }
+    }
+}
+
+@keyframes flash_hp{
+    0%{
+        background-color: $health;
+    }
+    100%{
+        background-color: $healthFlashing;
     }
 }
