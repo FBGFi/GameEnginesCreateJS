@@ -53,8 +53,6 @@ export class EnemyController {
         this.dealDMG = dealDMG;
         this.spawnEnemies(1);
         // this.handleEnemyMovement();
-
-        createjs.Ticker.addEventListener("tick", this.handleTick);
     }
 
     /**
@@ -132,16 +130,20 @@ export class EnemyController {
         enemy.y = Constants.canvasMaxHeight * (Math.random(Math.floor(Math.random) * 10) * 0.9 + 0.05);
     
         // Get a new random y position if any existing enemy already has that same y position -> no overlapping enemies
-        let hasUniqueYPos;
-        do {
-            hasUniqueYPos = true;
-            for (let i = 0; i < this.enemies.length; i++) {
-                if (enemy.y >= this.enemies[i].y - 50 && enemy.y <= this.enemies[i].y + 50) {
-                    enemy.y = Constants.canvasMaxHeight * (Math.random(Math.floor(Math.random) * 10) * 0.9 + 0.05);
-                    hasUniqueYPos = false;
-                }
-            }
-        } while (!hasUniqueYPos);
+        // const checkIfUniqueYPos = () => {
+        //     let hasUniqueYPos;
+        //     do {
+        //         hasUniqueYPos = true;
+        //         for (let i = 0; i < this.enemies.length; i++) {
+        //             if (enemy.y >= this.enemies[i].y - 50 && enemy.y <= this.enemies[i].y + 50) {
+        //                 enemy.y = Constants.canvasMaxHeight * (Math.random(Math.floor(Math.random) * 10) * 0.9 + 0.05);
+        //                 hasUniqueYPos = false;
+        //             }
+        //         }
+        //     } while (!hasUniqueYPos);
+        // }
+
+        // checkIfUniqueYPos();
         
         return enemy;
     }
@@ -149,22 +151,28 @@ export class EnemyController {
     /**
      * @author Sami - Checks enemies positions and if they should be removed from the stage
      */
-    handleEnemies = () => {
+    handleEnemies = (projectiles) => {
+        // Constants.handleMovement(this.enemies, -5, this.stage, (0 - 50));
         for (let i = 0; i < this.enemies.length; i++) {
             // Handle enemies movement
             this.move(this.enemies[i]);
-            if (this.enemies[i].x === 0 - Constants.playerHeight) {
+            if (this.enemies[i].x <= 0 - 50) {
                 this.dealDMG(5); // dmg should be different for each enemy
                 this.removeEnemy(this.enemies[i], i);
+            } else {
+                // Handle enemies collision with bullets
+                for (let j = 0; j < projectiles.length; j++) {
+                    if (projectiles[j].y >= this.enemies[i].y - 25 && projectiles[j].y <= this.enemies[i].y + 25) {
+                        if (projectiles[j].x >= this.enemies[i].x) {
+                            this.takeDamage(this.enemies[i], 1);
+                            this.stage.removeChild(projectiles[j]);
+                            projectiles.splice(j, 1);
+                            break;
+                        }
+                    }
+                }
+                break;
             }
         }
-    }
-
-    /**
-     * @author Sami - Updates enemies positions
-     * @param {*} event 
-     */
-    handleTick = (event) => {
-        this.handleEnemies();
     }
 }
