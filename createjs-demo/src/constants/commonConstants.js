@@ -11,6 +11,7 @@ const FPS = 60;
 const playerHeight = 5;
 const playerScale = 5;
 const enemySpeed = 5;
+const enemyHitBoxSize = 7;
 const gameSpeedUpInterval = 20000;
 const initEnemySpawnRate = 2000;
 
@@ -35,6 +36,8 @@ module.exports = {
     rocketDmg: rocketDmg,                       // rocket damage
     // enemy configs
     enemySpeed: enemySpeed,                     // enemy movement speed
+    // hit box size for enemy collision
+    enemyHitBoxSize: enemyHitBoxSize,
     // Frames per second
     FPS: FPS,
     // interval the game speeds up at
@@ -49,7 +52,12 @@ module.exports = {
     handleMovement: async (objArr, stage, removePoint, onRemoval = undefined) => {
         for (let i = objArr.length - 1; i >= 0; i--) {
             if (objArr[i] !== undefined) {
-                if ((objArr[i].speed > 0 && objArr[i].x <= removePoint) || (objArr[i].speed < 0 && objArr[i].x >= removePoint)) {
+                if(objArr[i].destroyed){
+                    await stage.removeChild(objArr[i]);
+                    await objArr.splice(i, 1);
+                    break;
+                }
+                else if ((objArr[i].speed > 0 && objArr[i].x <= removePoint) || (objArr[i].speed < 0 && objArr[i].x >= removePoint)) {
                     objArr[i].x += objArr[i].speed;
                 } else {
                     await stage.removeChild(objArr[i]);

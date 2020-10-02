@@ -131,6 +131,7 @@ export class GameController {
     handleTick = (event) => {
         this.playerController.playerMovement(this.player, this.state.playerDirection);
         this.playerController.handleProjectileMovement();
+        this.playerController.checkIfEnemyHit(this.enemyController.enemies);
         this.stage.update(event);
 
     }

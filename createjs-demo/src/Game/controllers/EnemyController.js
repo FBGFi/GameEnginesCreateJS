@@ -123,17 +123,7 @@ export class EnemyController {
         enemy.scale = Constants.playerScale;
         enemy.x = Constants.canvasMaxWidth;
         enemy.y = Constants.canvasMaxHeight * (Math.random(Math.floor(Math.random) * 10) * 0.9 + 0.05);   
-        // Get a new random y position if any existing enemy already has that same y position -> no overlapping enemies
-        //let hasUniqueYPos;
-        //do {
-        //    hasUniqueYPos = true;
-        //    for (let i = 0; i < this.enemies.length; i++) {
-        //        if (enemy.y >= this.enemies[i].y - 50 && enemy.y <= this.enemies[i].y + 50) {
-        //            enemy.y = Constants.canvasMaxHeight * (Math.random(Math.floor(Math.random) * 10) * 0.9 + 0.05);
-        //            hasUniqueYPos = false;
-        //        }
-        //    }
-        //} while (!hasUniqueYPos);
+        enemy.destroyed = false;
         
         return enemy;
     }

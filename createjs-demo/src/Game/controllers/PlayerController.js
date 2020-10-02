@@ -12,18 +12,18 @@ const createjs = window.createjs;
 /**
  * @author Aleksi - class controlling player actions
  */
-export class PlayerController{
+export class PlayerController {
     state = {
         rocketsLeft: Constants.initRockets,
         posY: 0,
         projectiles: []
     }
 
-    constructor(stage, updateUi, takeDMG){
+    constructor(stage, updateUi, takeDMG) {
         this.state.posY = Constants.canvasMaxWidth * 0.5625 / 2;
-        this.stage = stage;   
+        this.stage = stage;
         this.updateUi = updateUi;
-        this.takeDMG = takeDMG;   
+        this.takeDMG = takeDMG;
         createjs.Sound.registerSound(shootSound, "shoot");
         createjs.Sound.registerSound(rocketSound, "rocket");
         createjs.Sound.registerSound(hurtSound, "hurt");
@@ -33,11 +33,11 @@ export class PlayerController{
      * @author Aleksi - move the player on Y-axis
      * @param {Number} y - amount moved
      */
-    move = (y) => { 
-        if(this.state.posY - y >= Constants.canvasMaxHeight - (Constants.playerHeight * Constants.playerScale)) {
+    move = (y) => {
+        if (this.state.posY - y >= Constants.canvasMaxHeight - (Constants.playerHeight * Constants.playerScale)) {
             this.state.posY = Constants.canvasMaxHeight - (Constants.playerHeight * Constants.playerScale);
         }
-        else if(this.state.posY - y <= 0){ 
+        else if (this.state.posY - y <= 0) {
             this.state.posY = 0;
         }
         else {
@@ -58,12 +58,12 @@ export class PlayerController{
      * @author Aleksi - player is shooting
      * @param {String} weapon - "MAIN" or "ROCKET"
      */
-    shoot = (weapon) => { 
-        if(weapon === "MAIN"){
+    shoot = (weapon) => {
+        if (weapon === "MAIN") {
             this.createProjectile(weapon)
             createjs.Sound.play("shoot");
         }
-        else if(weapon === "ROCKET" && this.state.rocketsLeft > 0){
+        else if (weapon === "ROCKET" && this.state.rocketsLeft > 0) {
             this.state.rocketsLeft--;
             this.createProjectile(weapon);
             createjs.Sound.play("rocket");
@@ -78,23 +78,23 @@ export class PlayerController{
     playerMovement = (player, direction) => {
         switch (direction) {
             case "UP":
-                if (this.state.posY > 0) { 
-                    this.state.collided = false;  
+                if (this.state.posY > 0) {
+                    this.state.collided = false;
                     this.move(Constants.playerMovementSpeed);
                     player.y = this.state.posY;
-                } else if(!this.state.collided) {   
-                    this.state.collided = true;  
+                } else if (!this.state.collided) {
+                    this.state.collided = true;
                     createjs.Sound.play("hurt");
                     this.takeDMG(5);
                 }
                 break;
             case "DOWN":
-                if (this.state.posY < Constants.canvasMaxHeight - (Constants.playerHeight * Constants.playerScale)) {                    
-                    this.state.collided = false;  
+                if (this.state.posY < Constants.canvasMaxHeight - (Constants.playerHeight * Constants.playerScale)) {
+                    this.state.collided = false;
                     this.move(-Constants.playerMovementSpeed);
                     player.y = this.state.posY;
-                } else if(!this.state.collided) {   
-                    this.state.collided = true;    
+                } else if (!this.state.collided) {
+                    this.state.collided = true;
                     createjs.Sound.play("hurt");
                     this.takeDMG(5);
                 }
@@ -121,13 +121,14 @@ export class PlayerController{
             case "ROCKET":
                 scale = 4;
                 projectile = new createjs.Bitmap(rocketSprite);
-                projectile.y = this.state.posY + (Constants.playerHeight * Constants.playerScale / 2) - (scale + scale/2);
-                this.updateUi({rocketsLeft: this.state.rocketsLeft});
+                projectile.y = this.state.posY + (Constants.playerHeight * Constants.playerScale / 2) - (scale + scale / 2);
+                this.updateUi({ rocketsLeft: this.state.rocketsLeft });
                 break;
             default:
                 break;
         }
         projectile.scale = scale;
+        projectile.weapon = type;
         projectile.x = Constants.playerXPos;
         projectile.speed = Constants.projectileSpeed;
         this.state.projectiles.push(projectile);
@@ -137,7 +138,39 @@ export class PlayerController{
     /**
      * @author Aleksi - move the projectiles
      */
-    handleProjectileMovement = async() => {
+    handleProjectileMovement = async () => {
         this.state.projectiles = await Constants.handleMovement(this.state.projectiles, this.stage, Constants.canvasMaxWidth);
+    }
+
+    /**
+     * @author Aleksi - check whether any bullets hit enemies
+     */
+    checkIfEnemyHit = (enemies) => {
+        for (let i = 0; i < enemies.length; i++) {
+            for (let j = 0; j < this.state.projectiles.length; j++) {
+                if (this.state.projectiles[j].destroyed) { }
+                else if ((this.state.projectiles[j].y > enemies[i].y
+                    &&
+                    this.state.projectiles[j].y < enemies[i].y + (enemies[i].scale * Constants.enemyHitBoxSize))
+                    ||
+                    (this.state.projectiles[j].y < enemies[i].y
+                        &&
+                        this.state.projectiles[j].y + (this.state.projectiles[j].scale * Constants.playerHeight) > enemies[i].y)) {
+                    if ((this.state.projectiles[j].x > enemies[i].x
+                        &&
+                        this.state.projectiles[j].x < enemies[i].x + (enemies[i].scale * Constants.enemyHitBoxSize))
+                        ||
+                        (this.state.projectiles[j].x < enemies[i].x
+                            &&
+                            this.state.projectiles[j].x + (this.state.projectiles[j].scale * Constants.playerHeight) > enemies[i].x)) {
+                        this.state.projectiles[j].destroyed = true;
+                        enemies[i].hp -= this.state.projectiles[j].weapon == "MAIN" ? Constants.mainWeaponDmg : Constants.rocketDmg;
+                        if (enemies[i].hp <= 0) {
+                            enemies[i].destroyed = true;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
