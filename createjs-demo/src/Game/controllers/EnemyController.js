@@ -54,7 +54,7 @@ export class EnemyController {
         this.spawnEnemies(1);
         // this.handleEnemyMovement();
 
-        // createjs.Ticker.addEventListener("tick", this.handleTick);
+        createjs.Ticker.addEventListener("tick", this.handleTick);
     }
 
     /**
@@ -152,7 +152,7 @@ export class EnemyController {
     handleEnemies = () => {
         for (let i = 0; i < this.enemies.length; i++) {
             // Handle enemies movement
-            this.move(this.enemies[i], 5, 0);
+            this.move(this.enemies[i]);
             if (this.enemies[i].x === 0 - Constants.playerHeight) {
                 this.dealDMG(5); // dmg should be different for each enemy
                 this.removeEnemy(this.enemies[i], i);
