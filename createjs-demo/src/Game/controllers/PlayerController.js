@@ -137,6 +137,6 @@ export class PlayerController{
      * @author Aleksi - move the projectiles
      */
     handleProjectileMovement = async() => {
-        this.state.projectiles = await Constants.handleMovement(this.state.projectiles, Constants.projectileSpeed, this.stage);
+        this.state.projectiles = await Constants.handleMovement(this.state.projectiles, Constants.projectileSpeed, this.stage, Constants.canvasMaxWidth);
     }
 }
