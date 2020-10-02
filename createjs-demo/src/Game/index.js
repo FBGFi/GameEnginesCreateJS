@@ -45,6 +45,7 @@ class Game extends Component {
         this.startGame();
     }
 
+    // document.getElementById("myDIV") Constants.canvasMaxHeight
     render() {
         return (
             <div className="Game" style={{ maxWidth: Constants.canvasMaxWidth }}> 

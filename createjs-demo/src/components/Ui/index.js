@@ -20,8 +20,8 @@ const Ui = (props) => {
                 <div className={fillClassName} style={{width: hpWidth}}></div>
                 <p>HP: {props.healthRemaining}/{props.healthMax}</p>
             </div>
-            <div className='restart-game' style={{top: (props.uiHeight / 2)}}>
-                {props.width <= 0 ? <div><h1>Game Over</h1><button onClick={() => props.restart()}>Restart Game</button></div> : null}
+            <div className='restart-game'>
+                {props.width <= 0 ? <div><h1>Game Over!</h1><button onClick={() => props.restart()}>Restart Game</button></div> : null}
             </div>
         </div>
     )
