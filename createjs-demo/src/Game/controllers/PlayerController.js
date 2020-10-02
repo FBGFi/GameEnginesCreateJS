@@ -136,21 +136,7 @@ export class PlayerController{
     /**
      * @author Aleksi - move the projectiles
      */
-    handleProjectileMovement = async () => {
-        for (let i = this.state.projectiles.length - 1; i >= 0; i--) {
-            if (this.state.projectiles[i] !== undefined) {
-                if (this.state.projectiles[i].x < Constants.canvasMaxWidth) {
-                    this.state.projectiles[i].x += Constants.projectileSpeed;
-                } else if (this.state.projectiles[i].x > Constants.canvasMaxWidth) {
-                    this.stage.removeChild(this.state.projectiles[i]);
-                    if (this.state.projectiles.length > 1) {
-                        await this.state.projectiles.splice(0, i);
-                    } else {
-                        this.state.projectiles = [];
-                    }
-                    break;
-                }
-            }
-        }
+    handleProjectileMovement = async() => {
+        this.state.projectiles = await Constants.handleMovement(this.state.projectiles, Constants.projectileSpeed, this.stage, Constants.canvasMaxWidth);
     }
 }
