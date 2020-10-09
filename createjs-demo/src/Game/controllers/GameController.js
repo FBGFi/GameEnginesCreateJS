@@ -7,14 +7,15 @@ import { EnemyController } from "./EnemyController";
 import { BackgroundController } from "./BackgroundController";
 import playerSprite from "../sprites/playermodel.png";
 
+import shootSound from "../assets/sounds/shoot.wav";
+import rocketSound from "../assets/sounds/rocket.wav";
+import hurtSound from "../assets/sounds/hurt.wav";
+import explosionSound from "../assets/sounds/explosion.wav";
+
 const createjs = window.createjs;
 
 export class GameController {
     state = {
-        playerDirection: "NONE",
-        shooting: false,
-        goingUp: false,
-        goingDown: false
     }
 
     /**
@@ -37,6 +38,11 @@ export class GameController {
         createjs.Ticker.addEventListener("tick", this.handleTick);
         createjs.Ticker.init();
         createjs.Sound.setVolume(0.5);
+        
+        createjs.Sound.registerSound(shootSound, Constants.tokens.sounds.playerShoot);
+        createjs.Sound.registerSound(rocketSound, Constants.tokens.sounds.rocket);
+        createjs.Sound.registerSound(hurtSound, Constants.tokens.sounds.playerHit);
+        createjs.Sound.registerSound(explosionSound, Constants.tokens.sounds.explosion);
     }
 
     initPlayer = () => {
@@ -45,15 +51,9 @@ export class GameController {
         this.player.x = Constants.playerXPos;
         this.player.y = this.playerController.state.posY;
         this.stage.addChild(this.player);
-        
-        
-        
-        
+               
         this.stage.update();
 
-        document.onkeydown = this.handleKeyDown;
-        document.onkeyup = this.handleKeyUp;
-        document.onkeypress = this.handleKeyPress;
     }
 
     handleGameOver = () => {
@@ -61,77 +61,11 @@ export class GameController {
         createjs.Ticker.reset();        
     }
 
-    handleKeyPress = e => {
-        switch (e.key) {
-            case "Space":
-            case " ":
-                if (!this.state.shooting) {
-                    this.state.shooting = true;
-                    this.playerController.shoot("MAIN");
-                }
-                break;
-            case "KeyR":
-            case "r":
-                if (!this.state.shooting) {
-                    this.state.shooting = true;
-                    this.playerController.shoot("ROCKET");
-                }
-                break;
-            default:
-                break;
-        }
-    }
-
-    handleKeyDown = e => {
-        switch (e.key) {
-            case "w":
-            case "ArrowUp":
-                this.state.goingUp = true;
-                this.state.playerDirection = "UP";
-                break;
-            case "s":
-            case "ArrowDown":
-                this.state.goingDown = true;
-                this.state.playerDirection = "DOWN";
-                break;
-            default:
-                break;
-        }
-    }
-
-    handleKeyUp = e => {
-        switch (e.key) {
-            case "w":
-            case "ArrowUp":
-                this.state.goingUp = false;
-                if(!this.state.goingDown && !this.state.goingUp){
-                    this.state.playerDirection = "NONE";
-                } else if(this.state.goingDown){
-                    this.state.playerDirection = "DOWN"
-                }
-                break;
-            case "s":
-            case "ArrowDown":
-                this.state.goingDown = false;
-                if(!this.state.goingDown && !this.state.goingUp){
-                    this.state.playerDirection = "NONE";
-                } else if(this.state.goingUp){
-                    this.state.playerDirection = "UP"
-                }
-                break;
-            case " ":
-            case "r":
-                this.state.shooting = false;
-                break;
-            default:
-                break;
-        }
-    }
-
     handleTick = (event) => {
-        this.playerController.playerMovement(this.player, this.state.playerDirection);
+        this.playerController.playerMovement(this.player);
         this.playerController.handleProjectileMovement();
         this.playerController.checkIfEnemyHit(this.enemyController.enemies);
+        this.playerController.checkIfHitByEnemy(this.enemyController.enemies);
         this.stage.update(event);
         this.BackgroundController.handleWeeds();
     }

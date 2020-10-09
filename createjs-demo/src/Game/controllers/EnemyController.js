@@ -1,11 +1,19 @@
 // Enemy behaviour
-import Constants, { canvasMaxHeight, canvasMaxWidth } from "../../constants/commonConstants";
-import sprites, { blob, haamu, spinner, longboy, explosion } from "../sprites/sprites.js";
+import Constants from "../../constants/commonConstants";
+import sprites from "../sprites/sprites.js";
 
 // create.js from window
 const createjs = window.createjs;
 
-const enemy1 = () => {
+const explosion = (x,y) => {
+    let xplo = sprites.explosion();
+    xplo.x = x;
+    xplo.y = y;
+    xplo.scale = Constants.playerScale;
+    return xplo;
+}
+
+const blob = () => {
     let enemy = sprites.blob();
     enemy.hp = 3;
     enemy.score = 30;
@@ -14,7 +22,7 @@ const enemy1 = () => {
     return enemy;
 }
 
-const enemy2 = () => {
+const longboy = () => {
     let enemy = sprites.longboy();
     enemy.hp = 1;
     enemy.score = 10;
@@ -25,7 +33,7 @@ const enemy2 = () => {
     return enemy;
 }
 
-const enemy3 = () => {
+const spinner = () => {
     let enemy = sprites.spinner();
     enemy.hp = 4;
     enemy.score = 40;
@@ -36,7 +44,7 @@ const enemy3 = () => {
     return enemy;
 }
 
-const enemy4 = () => {
+const haamu = () => {
     let enemy = sprites.haamu();
     enemy.hp = 2;
     enemy.score = 20;
@@ -118,13 +126,13 @@ export class EnemyController {
         let enemy;
 
         if (r >= 0.5) {
-            enemy = enemy1();
+            enemy = blob();
         } else if (r >= 0.25) {
-            enemy = enemy2();
+            enemy = longboy();
         } else if (r >= 0.1) {
-            enemy = enemy3();
+            enemy = spinner();
         } else {
-            enemy = enemy4();
+            enemy = haamu();
         }
         
         // Initialize some attributes
@@ -144,7 +152,15 @@ export class EnemyController {
     }
        
     dealDMGtoPlayer = (obj) => {
-        this.dealDMG(obj.damage);
+        if(obj.x < 0 || obj.hitPlayer){
+            this.dealDMG(obj.damage);
+        }
+        if(obj.hitPlayer || obj.x > 0){
+            let xplo = explosion(obj.x, obj.y);
+            this.stage.addChild(xplo);
+            createjs.Sound.play(Constants.tokens.sounds.explosion);
+            setTimeout(() => {this.stage.removeChild(xplo)}, 500);
+        }
     }
     
     handleEnemyMovement = async () => {
