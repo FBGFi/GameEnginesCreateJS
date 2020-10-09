@@ -46,7 +46,10 @@ const tokens = {
         playerHit: "hurt",
         playerShoot: "shoot",
         rocket: "rocket",
-        explosion: "explosion"
+        explosion: "explosion",
+        gameOver: "gameover",
+        healthPickup: "health",
+        rocketPickup: "rocketpick"
     }
 }
 

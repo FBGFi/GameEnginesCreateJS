@@ -18,7 +18,7 @@ const blob = () => {
     enemy.hp = 3;
     enemy.score = 30;
     enemy.speed = -4;
-    enemy.damage = 1;
+    enemy.damage = -1;
     return enemy;
 }
 
@@ -27,7 +27,7 @@ const longboy = () => {
     enemy.hp = 1;
     enemy.score = 10;
     enemy.speed = -8;
-    enemy.damage = 3;
+    enemy.damage = -3;
     enemy.ySpeed = 10;
     enemy.yConstraint = 20;
     return enemy;
@@ -38,7 +38,7 @@ const spinner = () => {
     enemy.hp = 4;
     enemy.score = 40;
     enemy.speed = -2;
-    enemy.damage = 5;
+    enemy.damage = -5;
     enemy.ySpeed = 2;
     enemy.yConstraint = 100;
     return enemy;
@@ -49,7 +49,7 @@ const haamu = () => {
     enemy.hp = 2;
     enemy.score = 20;
     enemy.speed = -6;
-    enemy.damage = 2;
+    enemy.damage = -2;
     return enemy;
 }
 
@@ -59,15 +59,13 @@ const haamu = () => {
 export class EnemyController {
     // Single enemy control
 
-    constructor(stage, dealDMG) {
+    constructor(stage, changeHP, addRockets) {
         this.stage = stage;
+        this.addRockets = addRockets;
         this.enemies = [];
-        this.explosions = new createjs.Container();
-        this.dealDMG = dealDMG;
+        this.pickUps = [];
+        this.changeHP = changeHP;
         this.enemySpawnRate = Constants.initEnemySpawnRate;
-        //this.spawnEnemies(1);
-        // this.handleEnemyMovement();
-        // this.createTestExplosions();
         createjs.Ticker.addEventListener("tick", this.handleTick);
     }
 
@@ -110,17 +108,6 @@ export class EnemyController {
         return Math.random() < 0.1 ? true : false;
     }
 
-    // // General enemy control
-    // spawnEnemies = (n) => {
-    //     setInterval(() => {
-    //         for(let i = 0; i < n; i++) {
-    //             let enemy = this.createEnemy(2)
-    //             this.enemies.push(enemy);
-    //             this.stage.addChild(enemy);
-    //         }
-    //     }, 2000);
-    // }
-
     createEnemy = () => {
         let r = Math.random();
         let enemy;
@@ -150,10 +137,42 @@ export class EnemyController {
         
         return enemy;
     }
+
+    // :P
+    spawnPickUp = (x,y) => {
+        if(Math.random() < 0.15){
+            let pickUp;
+            if(Math.random() > 0.7){
+                pickUp = sprites.healthPickup();
+                pickUp.addResource = () => this.changeHP(10);
+                pickUp.soundToken = Constants.tokens.sounds.healthPickup;
+            } else {
+                pickUp = sprites.rocketPickup();
+                pickUp.addResource = () => this.addRockets(2);
+                pickUp.soundToken = Constants.tokens.sounds.rocketPickup;
+            }
+            pickUp.x = x;
+            pickUp.y = y;
+            pickUp.speed = -5;
+            pickUp.scale = Constants.playerScale;
+            this.pickUps.push(pickUp);
+            this.stage.addChild(pickUp);
+        }
+    }
+
+    onPickUpRemoval = obj => {
+        if(obj.destroyed){
+            obj.addResource();
+            createjs.Sound.play(obj.soundToken);
+        }
+    }
        
-    dealDMGtoPlayer = (obj) => {
+    onEnemyRemoval = (obj) => {
         if(obj.x < 0 || obj.hitPlayer){
-            this.dealDMG(obj.damage);
+            this.changeHP(obj.damage);
+        }
+        if(obj.x > 0 && obj.hitPlayer == undefined){
+            this.spawnPickUp(obj.x, obj.y);
         }
         if(obj.hitPlayer || obj.x > 0){
             let xplo = explosion(obj.x, obj.y);
@@ -164,27 +183,11 @@ export class EnemyController {
     }
     
     handleEnemyMovement = async () => {
-        this.enemies = await Constants.handleMovement(this.enemies, this.stage, -50, this.dealDMGtoPlayer);
-    }
-    
-    createTestExplosions() {
-        for (let i = 0; i < 5; i++) {
-            let explosion = sprites.explosion();
-            explosion.x = 300;
-            explosion.y = (Constants.canvasMaxHeight * Math.random());
-            explosion.scale = Constants.playerScale;
-            this.explosions.addChild(explosion);
-        }
-        this.stage.addChild(this.explosions);
+        this.enemies = await Constants.handleMovement(this.enemies, this.stage, -50, this.onEnemyRemoval);
     }
 
-    removeExplosions = () => {
-        for (let j = 0; j < this.explosions.children.length; j++) {
-            if (this.explosions.children[j].currentFrame >= 4) {
-                this.stage.removeChild(this.explosions.children[j]);
-                this.explosions.removeChildAt(j);
-            }
-        }
+    handlePickUpMovement = async() => {
+        this.pickUps = await Constants.handleMovement(this.pickUps, this.stage, -50, this.onPickUpRemoval);
     }
     
     spawnEnemy = () => {
@@ -198,7 +201,6 @@ export class EnemyController {
      * @param {*} event 
      */
     handleTick = (event) => {
-        this.removeExplosions();
         if(Math.round(createjs.Ticker.getTime()) % this.enemySpawnRate < 1000 / Constants.FPS){
             this.spawnEnemy();
         }
@@ -206,5 +208,6 @@ export class EnemyController {
             if(this.enemySpawnRate > 100) this.enemySpawnRate -= 100;
         }
         this.handleEnemyMovement();
+        this.handlePickUpMovement();
     }
 }

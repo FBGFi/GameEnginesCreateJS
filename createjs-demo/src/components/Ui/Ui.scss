@@ -7,6 +7,21 @@ $healthFlashing: rgb(54, 54, 54);
     border-left: 2px solid black;
     border-top: 2px solid black;
     border-right: 2px solid black;
+
+    button{
+        padding: 10px;
+        cursor: pointer;
+        background-color: #000 !important;
+        color: #b2f23a !important;
+        border: 0;
+        transition: all 0.2s;
+
+        &:hover{
+            box-shadow: 4px 4px #76a027;
+            transform: translate(-2px, -2px);
+        }
+    }
+
     .ui-top{
         height: 25px;
         .ui-right{
@@ -40,8 +55,13 @@ $healthFlashing: rgb(54, 54, 54);
         .fill{
             background-color: $health;
             height: 100%;
+            overflow: hidden;
+            clip-path: inset(0 0 0 0);
             &.flashing{
                 animation: flash_hp 0.3s infinite alternate;
+            }
+            p{
+                color:#b2f23a;
             }
         }
         p{
@@ -50,17 +70,24 @@ $healthFlashing: rgb(54, 54, 54);
             top: 50%;
             left: 50%;
             transform: translate(-50%,-50%);
-            color: #FFF;
+            color:#000;
         }
     }
 
-    .restart-game{
+    .menu{
         position: absolute;
         display: inline-block;
         top: 50%;
         left: 50%;
         text-align: center;
         transform: translate(-50%,-50%);
+        background-color: #b2f23a;
+        border: 2px solid black;
+        padding: 30px 40px;
+
+        button{
+            margin-top: 10px;
+        }
     }
 }
 

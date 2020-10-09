@@ -5,6 +5,23 @@
   border-right: 2px solid black;
 }
 
+.Ui button {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #000 !important;
+  color: #b2f23a !important;
+  border: 0;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+.Ui button:hover {
+  -webkit-box-shadow: 4px 4px #76a027;
+          box-shadow: 4px 4px #76a027;
+  -webkit-transform: translate(-2px, -2px);
+          transform: translate(-2px, -2px);
+}
+
 .Ui .ui-top {
   height: 25px;
 }
@@ -45,11 +62,18 @@
 .Ui .health-bar .fill {
   background-color: #000;
   height: 100%;
+  overflow: hidden;
+  -webkit-clip-path: inset(0 0 0 0);
+          clip-path: inset(0 0 0 0);
 }
 
 .Ui .health-bar .fill.flashing {
   -webkit-animation: flash_hp 0.3s infinite alternate;
           animation: flash_hp 0.3s infinite alternate;
+}
+
+.Ui .health-bar .fill p {
+  color: #b2f23a;
 }
 
 .Ui .health-bar p {
@@ -59,10 +83,10 @@
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
-  color: #FFF;
+  color: #000;
 }
 
-.Ui .restart-game {
+.Ui .menu {
   position: absolute;
   display: inline-block;
   top: 50%;
@@ -70,6 +94,13 @@
   text-align: center;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
+  background-color: #b2f23a;
+  border: 2px solid black;
+  padding: 30px 40px;
+}
+
+.Ui .menu button {
+  margin-top: 10px;
 }
 
 @-webkit-keyframes flash_hp {

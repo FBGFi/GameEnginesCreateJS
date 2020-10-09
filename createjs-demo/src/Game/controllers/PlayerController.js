@@ -29,11 +29,11 @@ export class PlayerController {
         goingDown: false
     }
 
-    constructor(stage, updateUi, takeDMG, addScore) {
+    constructor(stage, updateUi, changeHP, addScore) {
         this.state.posY = Constants.canvasMaxWidth * 0.5625 / 2;
         this.stage = stage;
         this.updateUi = updateUi;
-        this.takeDMG = takeDMG;
+        this.changeHP = changeHP;
         this.addScore = addScore;
 
         document.onkeydown = this.handleKeyDown;
@@ -154,7 +154,7 @@ export class PlayerController {
                 } else if (!this.state.collided) {
                     this.state.collided = true;
                     createjs.Sound.play(Constants.tokens.sounds.playerHit);
-                    this.takeDMG(5);
+                    this.changeHP(-5);
                 }
                 break;
             case Constants.tokens.playerDirection.down:
@@ -165,13 +165,18 @@ export class PlayerController {
                 } else if (!this.state.collided) {
                     this.state.collided = true;
                     createjs.Sound.play(Constants.tokens.sounds.playerHit);
-                    this.takeDMG(5);
+                    this.changeHP(-5);
                 }
                 break;
 
             default:
                 break;
         }
+    }
+
+    addRockets = amount => {
+        this.state.rocketsLeft += amount;
+        this.updateUi({ rocketsLeft: this.state.rocketsLeft});
     }
 
     /**
@@ -249,20 +254,28 @@ export class PlayerController {
     }
 
     /**
-     * @author Aleksi - check if enemies hit player
-     * @param {Object} player - player object from the stage
+     * @author Aleksi - check if objects hit player
+     * @param {Object} objArr - array of gameobjects
      */
-    checkIfHitByEnemy = (enemies) => {
-        for (let i = 0; i < enemies.length; i++) {
-            if (!enemies[i].destroyed && enemies[i].x <= Constants.playerXPos + (Constants.playerHeight * Constants.playerScale)) {
-                if (
-                    (enemies[i].y > this.state.posY && enemies[i].y < this.state.posY + (Constants.playerHeight * Constants.playerScale))
-                    ||
-                    (enemies[i].y < this.state.posY && enemies[i].y > this.state.posY - (Constants.playerHeight * Constants.playerScale))
+    checkIfHitByObject = (objArr) => {
+        for (let i = 0; i < objArr.length; i++) {
+            if (
+                !objArr[i].destroyed 
+                && 
+                objArr[i].x <= Constants.playerXPos + (Constants.playerHeight * Constants.playerScale)
+                &&
+                objArr[i].x >= Constants.playerXPos
                 ) {
-                    enemies[i].hitPlayer = true;
-                    enemies[i].destroyed = true;
-                    enemies[i].damage *= 2;
+                if (
+                    (objArr[i].y > this.state.posY && objArr[i].y < this.state.posY + (Constants.playerHeight * Constants.playerScale))
+                    ||
+                    (objArr[i].y < this.state.posY && objArr[i].y > this.state.posY - (Constants.playerHeight * Constants.playerScale))
+                ) {
+                    if(objArr[i].damage != undefined){
+                        objArr[i].damage *= 2;
+                    }
+                    objArr[i].hitPlayer = true;
+                    objArr[i].destroyed = true;
                 }
             }
         }

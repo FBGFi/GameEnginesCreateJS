@@ -31,10 +31,14 @@ class Game extends Component {
 
     /**
      * @author Aleksi - deal damage to the player
-     * @param {Number} amount -> amount of the damage dealt
+     * @param {Number} amount - amount of the damage dealt
      */
-    dealDMG = (amount) => {
-        this.updateUi({ hpLeft: this.state.hpLeft - amount })
+    changeHP = (amount) => {
+        let hpLeft = this.state.hpLeft + amount;
+        if(hpLeft > Constants.maxHP){
+            hpLeft = Constants.maxHP;
+        }
+        this.updateUi({ hpLeft: hpLeft })
     }
 
     addScore = (amount) => {
@@ -44,14 +48,9 @@ class Game extends Component {
     startGame = () => {
         this.setState({...initState, ...{startState: true}});
         this.stage = new window.createjs.Stage(this.canvasRef);
-        this.gameController = new GameController(this.stage, this.canvasRef, this.uiRef, this.updateUi, this.dealDMG, this.addScore);
+        this.gameController = new GameController(this.stage, this.canvasRef, this.uiRef, this.updateUi, this.changeHP, this.addScore);
     }
 
-    componentDidMount() {
-        //this.startGame();
-    }
-
-    // document.getElementById("myDIV") Constants.canvasMaxHeight
     render() {
         return (
             <div className="Game" style={{ maxWidth: Constants.canvasMaxWidth }}> 

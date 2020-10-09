@@ -7,9 +7,20 @@ const Ui = (props) => {
     let hpWidth = `calc(100% * ${props.width})`;
     let fillClassName = props.width <= 0.2 ? 'fill flashing' : 'fill';
 
-    let restartGameScreen = <div><h1>Game Over!</h1><h1>Your score is {props.score}!</h1><button onClick={() => props.start()}>Restart Game</button></div>
-    let startGameScreen = <div><h1>JS Impact</h1><button onClick={() => props.start()}>Start Game</button></div>
+    let gameScreen = props.startState ?
+        <div>
+            <h2>Game Over!</h2>
+            <h2>Your score is {props.score}!</h2>
+            {props.score == 0 ? <h2>You suck!</h2> : null}
+            <button onClick={() => props.start()}>Restart Game</button>
+        </div>
+        :
+        <div>
+            <h2>JS Impact</h2>
+            <button onClick={() => props.start()}>Start Game</button>
+        </div>
 
+    let menu = !props.startState || props.width <= 0 ? <div className='menu'>{gameScreen}</div> : null;
     return (
         <div className='Ui'>
             {/* placeholder to restart the game */}
@@ -20,12 +31,12 @@ const Ui = (props) => {
 
             </div>
             <div className='health-bar'>
-                <div className={fillClassName} style={{ width: hpWidth }}></div>
                 <p>HP: {props.healthRemaining <= 0 ? 0 : props.healthRemaining}/{props.healthMax}</p>
+                <div className={fillClassName} style={{ width: hpWidth }}>
+                    <p>HP: {props.healthRemaining <= 0 ? 0 : props.healthRemaining}/{props.healthMax}</p>
+                </div>
             </div>
-            <div className='restart-game'>
-                {props.startState == false ? startGameScreen : props.width <= 0 ? restartGameScreen : null}
-            </div>
+            {menu}
         </div>
     )
 }
