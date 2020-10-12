@@ -13,14 +13,19 @@ const Ui = (props) => {
             <h2>Your score is {props.score}!</h2>
             {props.score == 0 ? <h2>You suck!</h2> : null}
             <button onClick={() => props.start()}>Restart Game</button>
+            <button onClick={() => window.close()}>Quit Game</button>
         </div>
         :
         <div>
             <h2>JS Impact</h2>
             <button onClick={() => props.start()}>Start Game</button>
+            <button onClick={() => window.close()}>Quit Game</button>
         </div>
-
-    let menu = !props.startState || props.width <= 0 ? <div className='menu'>{gameScreen}</div> : null;
+    let scale = (50 - 50 * props.scaleFactor) * 2;
+    let menu = !props.startState || props.width <= 0 ? 
+    <div className='menu' style={{transform: `scale(${props.scaleFactor}) translate(${-50 - scale}%, ${-50 - scale}%)`}}>
+        {gameScreen}
+    </div> : null;
     return (
         <div className='Ui'>
             {/* placeholder to restart the game */}

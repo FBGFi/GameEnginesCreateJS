@@ -92,15 +92,23 @@
   top: 50%;
   left: 50%;
   text-align: center;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
   background-color: #b2f23a;
   border: 2px solid black;
   padding: 30px 40px;
 }
 
 .Ui .menu button {
-  margin-top: 10px;
+  margin: 10px 40px 0 40px;
+}
+
+.Ui .menu div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 @-webkit-keyframes flash_hp {

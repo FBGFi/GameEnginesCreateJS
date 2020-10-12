@@ -80,13 +80,16 @@ $healthFlashing: rgb(54, 54, 54);
         top: 50%;
         left: 50%;
         text-align: center;
-        transform: translate(-50%,-50%);
         background-color: #b2f23a;
         border: 2px solid black;
         padding: 30px 40px;
 
         button{
-            margin-top: 10px;
+            margin: 10px 40px 0 40px;
+        }
+        div{
+            display: flex;
+            flex-direction: column;
         }
     }
 }

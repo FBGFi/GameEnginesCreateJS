@@ -94,6 +94,8 @@ const handleMovement = async (objArr, stage, removePoint, onRemoval = undefined)
     return objArr;
 }
 
+const scaleFactor = () => window.innerWidth >= canvasMaxWidth ? 1 : window.innerWidth / canvasMaxWidth
+
 /**
  * @author Aleksi - constant variables through the app
  */
@@ -115,5 +117,6 @@ export default {
     gameSpeedUpInterval,
     initEnemySpawnRate,
     tokens,
-    handleMovement
+    handleMovement,
+    scaleFactor
 }

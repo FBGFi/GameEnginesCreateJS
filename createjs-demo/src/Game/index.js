@@ -12,7 +12,8 @@ const initState = {
     hpLeft: Constants.maxHP,
     rocketsLeft: Constants.initRockets,
     score: 0,
-    startState: false
+    startState: false,
+    scaleFactor: 1
 }
 
 class Game extends Component {
@@ -20,6 +21,13 @@ class Game extends Component {
 
     constructor(props) {
         super(props)
+        window.addEventListener('resize', () => {
+            let scaleFactor = Constants.scaleFactor();
+            console.log("asd");
+            if(scaleFactor != this.state.scaleFactor){
+                this.setState({...this.state, ...{scaleFactor: scaleFactor}});
+            }
+        });
     }
 
     updateUi = (obj) => {
@@ -54,7 +62,7 @@ class Game extends Component {
     render() {
         return (
             <div className="Game" style={{ maxWidth: Constants.canvasMaxWidth }}> 
-                <Ui width={this.state.hpLeft / Constants.maxHP} startState={this.state.startState} start={this.startGame} healthRemaining={this.state.hpLeft} healthMax={Constants.maxHP} rocketsRemaining={this.state.rocketsLeft} uiHeight={Constants.canvasMaxHeight} score={this.state.score} />
+                <Ui scaleFactor={this.state.scaleFactor} width={this.state.hpLeft / Constants.maxHP} startState={this.state.startState} start={this.startGame} healthRemaining={this.state.hpLeft} healthMax={Constants.maxHP} rocketsRemaining={this.state.rocketsLeft} uiHeight={Constants.canvasMaxHeight} score={this.state.score} />
                 <canvas
                     ref={ref => this.canvasRef = ref}
                     width={Constants.canvasMaxWidth}
