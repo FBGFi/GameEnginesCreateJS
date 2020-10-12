@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "./static/css/main.3cad3df1.chunk.css",
+    "main.js": "./static/js/main.65e4906c.chunk.js",
+    "main.js.map": "./static/js/main.65e4906c.chunk.js.map",
+    "runtime-main.js": "./static/js/runtime-main.2fc9c44f.js",
+    "runtime-main.js.map": "./static/js/runtime-main.2fc9c44f.js.map",
+    "static/js/2.547d8519.chunk.js": "./static/js/2.547d8519.chunk.js",
+    "static/js/2.547d8519.chunk.js.map": "./static/js/2.547d8519.chunk.js.map",
+    "index.html": "./index.html",
+    "precache-manifest.97529bf78196c2899b9f03e50253786c.js": "./precache-manifest.97529bf78196c2899b9f03e50253786c.js",
+    "service-worker.js": "./service-worker.js",
+    "static/css/main.3cad3df1.chunk.css.map": "./static/css/main.3cad3df1.chunk.css.map",
+    "static/js/2.547d8519.chunk.js.LICENSE.txt": "./static/js/2.547d8519.chunk.js.LICENSE.txt",
+    "static/media/explosion.wav": "./static/media/explosion.297d5ece.wav",
+    "static/media/gameover.wav": "./static/media/gameover.1521a20f.wav",
+    "static/media/health.wav": "./static/media/health.818d089a.wav",
+    "static/media/hurt.wav": "./static/media/hurt.57950770.wav",
+    "static/media/rocket.wav": "./static/media/rocket.e33fff63.wav",
+    "static/media/rocketPick.wav": "./static/media/rocketPick.5e6be631.wav",
+    "static/media/shoot.wav": "./static/media/shoot.8f5fd693.wav"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.2fc9c44f.js",
+    "static/js/2.547d8519.chunk.js",
+    "static/css/main.3cad3df1.chunk.css",
+    "static/js/main.65e4906c.chunk.js"
+  ]
+}
