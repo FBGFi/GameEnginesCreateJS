@@ -64,7 +64,10 @@ const tokens = {
 const handleMovement = async (objArr, stage, removePoint, onRemoval = undefined) => {
     for (let i = objArr.length - 1; i >= 0; i--) {
         if (objArr[i] !== undefined) {
-            if (!objArr[i].destroyed && ((objArr[i].speed > 0 && objArr[i].x <= removePoint) || (objArr[i].speed < 0 && objArr[i].x >= removePoint))) {
+            if (
+                !objArr[i].destroyed 
+                && 
+                ((objArr[i].speed > 0 && objArr[i].x <= removePoint) || (objArr[i].speed < 0 && objArr[i].x >= removePoint))) {
                 objArr[i].x += objArr[i].speed;
                 if(objArr[i].ySpeed !== undefined){
                     if((objArr[i].yInit + objArr[i].yConstraint < objArr[i].y && objArr[i].ySpeed > 0)
@@ -94,7 +97,7 @@ const handleMovement = async (objArr, stage, removePoint, onRemoval = undefined)
 /**
  * @author Aleksi - constant variables through the app
  */
-module.exports = {
+export default {
     canvasMaxWidth,
     canvasMaxHeight,
     maxHP,

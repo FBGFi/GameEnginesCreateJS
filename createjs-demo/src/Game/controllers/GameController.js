@@ -70,13 +70,13 @@ export class GameController {
         createjs.Ticker.reset();
     }
 
-    handleTick = (event) => {
+    handleTick = async(event) => {
         this.playerController.playerMovement(this.player);
         this.playerController.handleProjectileMovement();
         this.playerController.checkIfEnemyHit(this.enemyController.enemies);
         this.playerController.checkIfHitByObject(this.enemyController.enemies);
         this.playerController.checkIfHitByObject(this.enemyController.pickUps);
-        this.stage.update(event);
         this.BackgroundController.handleWeeds();
+        this.stage.update(event);
     }
 }
