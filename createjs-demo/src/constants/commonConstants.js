@@ -49,7 +49,8 @@ const tokens = {
         explosion: "explosion",
         gameOver: "gameover",
         healthPickup: "health",
-        rocketPickup: "rocketpick"
+        rocketPickup: "rocketpick",
+        gameMusic: "music"
     }
 }
 
