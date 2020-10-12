@@ -3,6 +3,8 @@
   overflow: hidden;
   background-color: #b2f23a;
   background: radial-gradient(#b2f23a, #76a027);
+  min-width: 400px;
+  position: relative;
 }
 
 .Game canvas {

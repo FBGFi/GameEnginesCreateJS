@@ -6,6 +6,8 @@ $background-vignette: #76a027;
     overflow: hidden;
     background-color: $background-color;
     background: radial-gradient($background-color, $background-vignette);
+    min-width: 400px;
+    position: relative;
 
     canvas{
         width: 100%;

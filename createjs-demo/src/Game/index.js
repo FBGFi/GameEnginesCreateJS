@@ -11,6 +11,9 @@ const initState = {
     scaleFactor: 1,
     hpLeft: Constants.maxHP,
     rocketsLeft: Constants.initRockets,
+    score: 0,
+    startState: false,
+    scaleFactor: 1
 }
 
 class Game extends Component {
@@ -18,6 +21,13 @@ class Game extends Component {
 
     constructor(props) {
         super(props)
+        window.addEventListener('resize', () => {
+            let scaleFactor = Constants.scaleFactor();
+            console.log("asd");
+            if(scaleFactor != this.state.scaleFactor){
+                this.setState({...this.state, ...{scaleFactor: scaleFactor}});
+            }
+        });
     }
 
     updateUi = (obj) => {
@@ -29,26 +39,30 @@ class Game extends Component {
 
     /**
      * @author Aleksi - deal damage to the player
-     * @param {Number} amount -> amount of the damage dealt
+     * @param {Number} amount - amount of the damage dealt
      */
-    dealDMG = (amount) => {
-        this.updateUi({ hpLeft: this.state.hpLeft - amount })
+    changeHP = (amount) => {
+        let hpLeft = this.state.hpLeft + amount;
+        if(hpLeft > Constants.maxHP){
+            hpLeft = Constants.maxHP;
+        }
+        this.updateUi({ hpLeft: hpLeft })
+    }
+
+    addScore = (amount) => {
+        this.updateUi({score: this.state.score + amount})
     }
 
     startGame = () => {
-        this.setState(initState);
+        this.setState({...initState, ...{startState: true}});
         this.stage = new window.createjs.Stage(this.canvasRef);
-        this.gameController = new GameController(this.stage, this.canvasRef, this.uiRef, this.updateUi, this.dealDMG);
-    }
-
-    componentDidMount() {
-        this.startGame();
+        this.gameController = new GameController(this.stage, this.canvasRef, this.uiRef, this.updateUi, this.changeHP, this.addScore);
     }
 
     render() {
         return (
-            <div className="Game" style={{ maxWidth: Constants.canvasMaxWidth }}>
-                <Ui width={this.state.hpLeft / Constants.maxHP} restart={this.startGame} healthRemaining={this.state.hpLeft} healthMax={Constants.maxHP} rocketsRemaining={this.state.rocketsLeft} />
+            <div className="Game" style={{ maxWidth: Constants.canvasMaxWidth }}> 
+                <Ui scaleFactor={this.state.scaleFactor} width={this.state.hpLeft / Constants.maxHP} startState={this.state.startState} start={this.startGame} healthRemaining={this.state.hpLeft} healthMax={Constants.maxHP} rocketsRemaining={this.state.rocketsLeft} uiHeight={Constants.canvasMaxHeight} score={this.state.score} />
                 <canvas
                     ref={ref => this.canvasRef = ref}
                     width={Constants.canvasMaxWidth}
