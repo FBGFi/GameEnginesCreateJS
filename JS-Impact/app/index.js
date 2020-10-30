@@ -5,7 +5,7 @@ function createWindow () {
   const win = new BrowserWindow({
     width: 1280,
     height: 774,
-    icon: "./app/favicon.ico",
+    icon: "app/src/favicon.ico",
     backgroundColor: '#111',
     fullscreenable: false,
     frame: false,
@@ -17,11 +17,11 @@ function createWindow () {
   })
 
   // and load the index.html of the app.
-  win.loadFile('app/index.html');
+  win.loadFile('app/src/index.html');
 
   // Open the DevTools.
   
-//   win.webContents.openDevTools()
+  //win.webContents.openDevTools()
   win.setMenu(null);
 
 }

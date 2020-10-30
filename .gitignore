@@ -1,1 +1,4 @@
 node_modules
+dist
+JS-Impact/app/src/*
+!JS-Impact/app/src/README.md

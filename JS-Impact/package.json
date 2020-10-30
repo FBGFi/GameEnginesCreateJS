@@ -1,7 +1,9 @@
 {
   "name": "JS-Impact",
+  "productName": "JS-Impact",
   "version": "1.0.0",
-  "description": "",
+  "description": "Spaceshooter created with CreateJS, React and Electron",
+  "author": "FBGFi",
   "main": "app/index.js",
   "scripts": {
     "start": "electron .",
@@ -9,9 +11,23 @@
     "pack": "electron-builder --dir",
     "dist": "electron-builder"
   },
+  "build": {
+    "appId": "fi.jsimpact.app",
+    "win": {
+      "target": "NSIS",
+      "icon": "app/src/favicon.ico"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FBGFi/GameEnginesCreateJS.git"
+  },
   "keywords": [],
-  "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FBGFi/GameEnginesCreateJS/issues"
+  },
+  "homepage": "https://github.com/FBGFi/GameEnginesCreateJS#readme",
   "devDependencies": {
     "electron": "^10.1.3",
     "electron-builder": "^22.8.1"
