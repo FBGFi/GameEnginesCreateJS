@@ -14,8 +14,11 @@ import explosionSound from "../assets/sounds/explosion.wav";
 import gameOverSound from "../assets/sounds/gameover.wav";
 import healthPickUpSound from "../assets/sounds/health.wav";
 import rocketPickUpSound from "../assets/sounds/rocketPick.wav";
+import gameMusic from '../assets/sounds/gameMusic.mp3';
 
 const createjs = window.createjs;
+
+createjs.Sound.registerSound(gameMusic, Constants.tokens.sounds.gameMusic);
 
 export class GameController {
     state = {
@@ -49,6 +52,10 @@ export class GameController {
         createjs.Sound.registerSound(gameOverSound, Constants.tokens.sounds.gameOver);
         createjs.Sound.registerSound(healthPickUpSound, Constants.tokens.sounds.healthPickup);
         createjs.Sound.registerSound(rocketPickUpSound, Constants.tokens.sounds.rocketPickup);
+
+        // Set background music
+        const gameMusic = createjs.Sound.play(Constants.tokens.sounds.gameMusic, {loop: 10});
+        gameMusic.volume = gameMusic.volume * 0.28;
     }
 
     initPlayer = () => {
@@ -59,14 +66,16 @@ export class GameController {
         this.stage.addChild(this.player);
 
         this.stage.update();
-
     }
 
     handleGameOver = () => {
         document.onkeydown = null;
         document.onkeyup = null;
         document.onkeypress = null;
+        
+        createjs.Sound.stop(); // Stop the game music on the background
         createjs.Sound.play(Constants.tokens.sounds.gameOver);
+
         createjs.Ticker.reset();
     }
 
