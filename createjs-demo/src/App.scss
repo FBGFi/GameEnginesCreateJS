@@ -1,4 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@font-face{
+    font-family: 'Press Start 2P';
+    font-style: cursive;
+    src: url('./libs/fonts/PressStart2P-Regular.ttf') format('truetype'),
+        url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap') format('truetype');
+}
 .App{
     display: flex;
     height: 100vh;
