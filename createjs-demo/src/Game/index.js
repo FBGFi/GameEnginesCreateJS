@@ -19,17 +19,6 @@ const initState = {
 class Game extends Component {
     state = initState;
 
-    constructor(props) {
-        super(props)
-        window.addEventListener('resize', () => {
-            let scaleFactor = Constants.scaleFactor();
-            console.log("asd");
-            if(scaleFactor != this.state.scaleFactor){
-                this.setState({...this.state, ...{scaleFactor: scaleFactor}});
-            }
-        });
-    }
-
     updateUi = (obj) => {
         this.setState({ ...this.state, ...obj });
         if (this.state.hpLeft <= 0) {
@@ -57,6 +46,15 @@ class Game extends Component {
         this.setState({...initState, ...{startState: true}});
         this.stage = new window.createjs.Stage(this.canvasRef);
         this.gameController = new GameController(this.stage, this.canvasRef, this.uiRef, this.updateUi, this.changeHP, this.addScore);
+    }
+
+    componentDidMount(){
+        window.addEventListener('resize', () => {
+            let scaleFactor = Constants.scaleFactor();
+            if(scaleFactor != this.state.scaleFactor){
+                this.setState({...this.state, ...{scaleFactor: scaleFactor}});
+            }
+        });
     }
 
     render() {

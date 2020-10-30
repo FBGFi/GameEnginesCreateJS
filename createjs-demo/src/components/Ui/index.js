@@ -21,9 +21,10 @@ const Ui = (props) => {
             <button onClick={() => props.start()}>Start Game</button>
             <button onClick={() => window.close()}>Quit Game</button>
         </div>
-    let scale = (50 - 50 * props.scaleFactor) * 2;
+    let scaleFactor = 1 - ((1 - props.scaleFactor) / 2)
+    let scale = (50 - 50 * scaleFactor);
     let menu = !props.startState || props.width <= 0 ? 
-    <div className='menu' style={{transform: `scale(${props.scaleFactor}) translate(${-50 - scale}%, ${-50 - scale}%)`}}>
+    <div className='menu' style={{transform: `scale(${scaleFactor}) translate(${-50 - scale}%, ${-50 - scale}%)`}}>
         {gameScreen}
     </div> : null;
     return (
