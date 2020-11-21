@@ -2,7 +2,6 @@
 
 import Constants from "../../constants/commonConstants";
 import { PlayerController } from "./PlayerController";
-import { UIController } from "./UIController"
 import { EnemyController } from "./EnemyController";
 import { BackgroundController } from "./BackgroundController";
 import playerSprite from "../sprites/playermodel.png";
@@ -35,7 +34,6 @@ export class GameController {
         this.stage = stage;
         this.BackgroundController = new BackgroundController(stage, canvas);
         this.playerController = new PlayerController(stage, updateUi, changeHP, addScore);
-        this.UIController = new UIController(this.stage, this.canvas, this.ui)
         this.initPlayer();
 
         this.enemyController = new EnemyController(stage, changeHP, this.playerController.addRockets);

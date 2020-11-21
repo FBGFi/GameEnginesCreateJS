@@ -90,6 +90,41 @@ $healthFlashing: rgb(54, 54, 54);
         div{
             display: flex;
             flex-direction: column;
+            margin: 10px 0;
+            img{
+                width: 20px;
+                image-rendering: optimizeSpeed;             /* STOP SMOOTHING, GIVE ME SPEED  */
+                image-rendering: -moz-crisp-edges;          /* Firefox                        */
+                image-rendering: -o-crisp-edges;            /* Opera                          */
+                image-rendering: -webkit-optimize-contrast; /* Chrome (and eventually Safari) */
+                image-rendering: pixelated; /* Chrome */
+                image-rendering: optimize-contrast;         /* CSS3 Proposed                  */
+                -ms-interpolation-mode: nearest-neighbor;   /* IE8+                           */
+            }
+            div{
+                display: flex;
+                flex-direction: row;
+            }
+            p{
+                margin: auto auto auto 30px;
+                flex: 1;
+                text-align: right;
+
+            }
+            span{
+                padding: 15px;
+                background-color: #000;
+                color: #b2f23a !important;
+                font-size: 0.6rem;
+                border-radius: 2px;
+            }
+            &>span{
+                margin-left: 0;
+                margin-right: 5px;
+            }
+            span:first-child{
+                margin-right: 5px;
+            }
         }
     }
 }

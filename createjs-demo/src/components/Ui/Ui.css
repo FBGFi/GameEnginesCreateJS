@@ -109,6 +109,61 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  margin: 10px 0;
+}
+
+.Ui .menu div img {
+  width: 20px;
+  image-rendering: optimizeSpeed;
+  /* STOP SMOOTHING, GIVE ME SPEED  */
+  image-rendering: -moz-crisp-edges;
+  /* Firefox                        */
+  image-rendering: -o-crisp-edges;
+  /* Opera                          */
+  image-rendering: -webkit-optimize-contrast;
+  /* Chrome (and eventually Safari) */
+  image-rendering: -o-pixelated;
+  image-rendering: pixelated;
+  /* Chrome */
+  image-rendering: optimize-contrast;
+  /* CSS3 Proposed                  */
+  -ms-interpolation-mode: nearest-neighbor;
+  /* IE8+                           */
+}
+
+.Ui .menu div div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.Ui .menu div p {
+  margin: auto auto auto 30px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  text-align: right;
+}
+
+.Ui .menu div span {
+  padding: 15px;
+  background-color: #000;
+  color: #b2f23a !important;
+  font-size: 0.6rem;
+  border-radius: 2px;
+}
+
+.Ui .menu div > span {
+  margin-left: 0;
+  margin-right: 5px;
+}
+
+.Ui .menu div span:first-child {
+  margin-right: 5px;
 }
 
 @-webkit-keyframes flash_hp {

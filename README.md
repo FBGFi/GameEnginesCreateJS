@@ -3,7 +3,7 @@
 1. cd {path}/createjs-demo
 2. npm install
 3. npm run build
-4. move contents of /createjs-demo/build to /JS-Impact/app/src
+4. move contents of {path}/createjs-demo/build to {path}/JS-Impact/app/src
 5. cd {path}/JS-Impact
 6. npm install
 7. npm run dist
